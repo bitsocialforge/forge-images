@@ -1,0 +1,29 @@
+{
+  "name": "forge-images",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "description": "Forge Images public site, upload client, and API docs",
+  "type": "module",
+  "packageManager": "yarn@4.17.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node scripts/start.mjs",
+    "build": "yarn workspaces foreach -A run build",
+    "typecheck": "yarn workspaces foreach -A run typecheck",
+    "test": "vitest run",
+    "format": "oxfmt packages scripts site/assets",
+    "format:check": "oxfmt --check packages scripts site/assets"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "oxfmt": "0.66.0",
+    "portless": "0.11.1",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@bitsocialforge/forge-images-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Upload and report client for Forge Images, the free media host by Bitsocial Forge",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

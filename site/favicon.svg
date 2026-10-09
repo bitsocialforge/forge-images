@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 388 434.42" role="img" aria-label="Bitsocial Forge">
+  <title>Bitsocial Forge</title>
+  <g fill="#ff6a00" stroke="#ff6a00" stroke-width="22" stroke-linecap="butt">
+    <line x1="157.63" y1="65" x2="80.37" y2="109.61"/>
+    <line x1="230.37" y1="65" x2="307.63" y2="109.61"/>
+    <line x1="80.37" y1="151.61" x2="157.63" y2="196.21"/>
+    <line x1="307.63" y1="151.61" x2="230.37" y2="196.21"/>
+    <line x1="157.63" y1="238.21" x2="80.37" y2="282.81"/>
+    <line x1="230.37" y1="238.21" x2="307.63" y2="282.81"/>
+    <line x1="80.37" y1="324.81" x2="157.63" y2="369.42"/>
+    <line x1="307.63" y1="324.81" x2="230.37" y2="369.42"/>
+    <circle cx="194" cy="44" r="44" stroke="none"/>
+    <circle cx="44" cy="130.61" r="44" stroke="none"/>
+    <circle cx="344" cy="130.61" r="44" stroke="none"/>
+    <circle cx="194" cy="217.21" r="44" stroke="none"/>
+    <circle cx="44" cy="303.81" r="44" stroke="none"/>
+    <circle cx="344" cy="303.81" r="44" stroke="none"/>
+    <circle cx="194" cy="390.42" r="44" stroke="none"/>
+  </g>
+</svg>
