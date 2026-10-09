@@ -196,8 +196,10 @@
         </ul>
         <p>
           We remove EXIF (including GPS location), XMP, IPTC, and comments from JPEG, PNG, and WebP files before storing
-          them, keeping only the rotation setting so photos display the right way up. GIF and SWF files are stored exactly as uploaded, and a file that cannot be processed safely is stored as
-          uploaded. Remove sensitive information yourself before uploading.
+          them, keeping only the rotation setting so photos display the right way up. We remove container metadata,
+          including location, from MP4 and WebM videos. GIF and SWF files are stored exactly as uploaded, and an image
+          that cannot be processed safely is stored as uploaded. Remove sensitive information yourself before
+          uploading.
         </p>
 
         <h3>What we do not do</h3>
@@ -216,7 +218,8 @@
             <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a>.
           </li>
           <li>
-            <strong>OpenAI</strong> receives new images for automated moderation through its API. OpenAI does not train
+            <strong>OpenAI</strong> receives new images, and still frames sampled from new videos, for automated
+            moderation through its API. OpenAI does not train
             on API data by default and may keep it for up to 30 days to detect abuse.
             <a href="https://openai.com/enterprise-privacy/">OpenAI API privacy</a>.
           </li>

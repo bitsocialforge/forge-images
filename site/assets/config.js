@@ -22,4 +22,5 @@ export const LIMITS = {
   image: 10 * MIB,
   gif: 20 * MIB,
   swf: 20 * MIB,
+  video: 50 * MIB,
 };

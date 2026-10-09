@@ -9,13 +9,17 @@ const turnstileSlot = document.getElementById("turnstile-slot");
 const results = document.getElementById("results");
 
 const PENDING_WAIT_MS = 60_000;
+// Video checks decode sampled frames, so they take longer than images.
+const PENDING_VIDEO_WAIT_MS = 120_000;
 const PENDING_MAX_DELAY_MS = 8_000;
+const VIDEO_PROBE_TIMEOUT_MS = 10_000;
 
 /** Client-side precheck only; the API sniffs magic bytes and is authoritative. */
 function classify(file) {
   const name = file.name.toLowerCase();
   if (file.type === "image/gif" || name.endsWith(".gif")) return "gif";
   if (file.type === "application/x-shockwave-flash" || name.endsWith(".swf")) return "swf";
+  if (/^video\/(mp4|webm)$/.test(file.type) || /\.(mp4|webm)$/.test(name)) return "video";
   if (/^image\/(jpeg|png|webp)$/.test(file.type) || /\.(jpe?g|png|webp)$/.test(name)) return "image";
   return null;
 }
@@ -130,24 +134,46 @@ function canLoadImage(url) {
   });
 }
 
-/** New images 404 until automated checks finish (seconds). Poll with backoff, bounded. */
-async function waitUntilServed(url) {
-  const deadline = Date.now() + PENDING_WAIT_MS;
+/** Loads only the video's metadata; a browser that cannot decode the codec also reports false. */
+function canLoadVideo(url) {
+  return new Promise((resolve) => {
+    const video = document.createElement("video");
+    const timeout = setTimeout(() => settle(false), VIDEO_PROBE_TIMEOUT_MS);
+    function settle(loaded) {
+      clearTimeout(timeout);
+      video.onloadedmetadata = null;
+      video.onerror = null;
+      // Stop the download; the element was never attached to the page.
+      video.removeAttribute("src");
+      video.load();
+      resolve(loaded);
+    }
+    video.preload = "metadata";
+    video.muted = true;
+    video.onloadedmetadata = () => settle(true);
+    video.onerror = () => settle(false);
+    video.src = url;
+  });
+}
+
+/** New files 404 until automated checks finish. Poll with backoff, bounded. */
+async function waitUntilServed(url, isVideo) {
+  const deadline = Date.now() + (isVideo ? PENDING_VIDEO_WAIT_MS : PENDING_WAIT_MS);
   let delay = 1_000;
   while (Date.now() < deadline) {
     await new Promise((resolve) => setTimeout(resolve, delay));
-    if (await canLoadImage(url)) return true;
+    if (await (isVideo ? canLoadVideo(url) : canLoadImage(url))) return true;
     delay = Math.min(delay * 2, PENDING_MAX_DELAY_MS);
   }
   return false;
 }
 
-async function reportWhenServed(row, url) {
-  if (await waitUntilServed(url)) row.setStatus("Live. The link works now.", "ok");
+async function reportWhenServed(row, url, isVideo) {
+  if (await waitUntilServed(url, isVideo)) row.setStatus("Live. The link works now.", "ok");
   else row.setStatus("Uploaded, but still under review. The link will work once it is approved.");
 }
 
-/** Token + POST for one file. Polling for a pending image runs detached so the queue moves on. */
+/** Token + POST for one file. Polling for a pending file runs detached so the queue moves on. */
 async function sendOne(file, row, hideName) {
   try {
     row.setStatus("Checking your browser…");
@@ -169,9 +195,12 @@ async function sendOne(file, row, hideName) {
       row.setStatus("Live. The link works now.", "ok");
     } else if (body.mime === "application/x-shockwave-flash") {
       row.setStatus("Uploaded. New SWF files are reviewed by a person; the link returns 404 until approved.");
+    } else if (body.mime.startsWith("video/")) {
+      row.setStatus("Uploaded. Checking frames from the video; the link works in a minute or less…");
+      void reportWhenServed(row, body.url, true);
     } else {
       row.setStatus("Uploaded. Running automated checks; the link works in a few seconds…");
-      void reportWhenServed(row, body.url);
+      void reportWhenServed(row, body.url, false);
     }
   } catch (error) {
     row.setProgress(null);
@@ -188,7 +217,7 @@ function addFiles(fileList) {
     const row = createRow(file);
     const kind = classify(file);
     if (!kind) {
-      row.setStatus("Not accepted: upload JPEG, PNG, WebP, GIF, or SWF files.", "error");
+      row.setStatus("Not accepted: upload JPEG, PNG, WebP, GIF, MP4, WebM, or SWF files.", "error");
       continue;
     }
     if (file.size > LIMITS[kind]) {

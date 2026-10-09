@@ -53,9 +53,10 @@
         <ul>
           <li>JPEG, PNG, and WebP images up to 10 MB</li>
           <li>GIFs up to 20 MB</li>
+          <li>MP4 and WebM videos up to 50 MB and 10 minutes (WebM must use VP8, VP9, or AV1 video)</li>
           <li>Flash SWF files up to 20 MB (uncompressed or zlib-compressed; LZMA-compressed SWFs are not supported)</li>
         </ul>
-        <p>Video is not supported yet. Uploads are also limited per hour and per day for each connection.</p>
+        <p>Uploads are also limited per hour and per day for each connection.</p>
 
         <h3>How long are files kept?</h3>
         <p>
@@ -71,7 +72,8 @@
 
         <h3>Why does my link show an error right after uploading?</h3>
         <p>
-          New images stay private until automated checks finish, which usually takes a few seconds. If a check flags a
+          New images and videos stay private until automated checks finish, which usually takes a few seconds for an
+          image and up to a minute for a video. If a check flags a
           file, a person reviews it before it goes live. New SWF files are always reviewed by a person, so their links
           return 404 until approved.
         </p>
@@ -87,8 +89,9 @@
         <p>
           Yes. We remove EXIF (including GPS location), XMP, IPTC, and comments from JPEG, PNG, and WebP files before
           storing them, without re-compressing the image. Only the rotation setting is kept, so photos display the
-          right way up. GIF and SWF files are stored exactly as uploaded. If a file
-          cannot be processed safely, it is stored as uploaded, so remove anything sensitive yourself first.
+          right way up. For MP4 and WebM videos we remove the container metadata, including location and titles,
+          without re-encoding. GIF and SWF files are stored exactly as uploaded. If an image cannot be processed
+          safely, it is stored as uploaded, so remove anything sensitive yourself first.
         </p>
 
         <h3>Can I delete a file I uploaded?</h3>
@@ -115,7 +118,8 @@
 
         <h3>Who checks the uploads?</h3>
         <p>
-          New images are checked automatically with OpenAI's moderation service. Cloudflare also scans served files for
+          New images, and frames sampled from new videos, are checked automatically with OpenAI's moderation service.
+          Cloudflare also scans served files for
           known child sexual abuse material. Flagged files and all new SWF files are reviewed by a person. Reported
           files are re-checked automatically; email
           <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> when a person needs to look.
