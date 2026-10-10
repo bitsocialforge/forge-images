@@ -135,10 +135,10 @@ function canLoadImage(url) {
 }
 
 /** Loads only the video's metadata; a browser that cannot decode the codec also reports false. */
-function canLoadVideo(url) {
+function canLoadVideo(url, timeoutMs) {
   return new Promise((resolve) => {
     const video = document.createElement("video");
-    const timeout = setTimeout(() => settle(false), VIDEO_PROBE_TIMEOUT_MS);
+    const timeout = setTimeout(() => settle(false), timeoutMs);
     function settle(loaded) {
       clearTimeout(timeout);
       video.onloadedmetadata = null;
@@ -156,13 +156,42 @@ function canLoadVideo(url) {
   });
 }
 
+/**
+ * Asks the media origin instead of decoding the video, so a codec this browser cannot play (HEVC in
+ * Firefox) still reports live. 2xx is live, anything else not yet. When the request itself fails
+ * (network error, or no CORS on the media origin), this attempt falls back to a metadata load.
+ */
+async function isVideoServed(url) {
+  const startedAt = Date.now();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), VIDEO_PROBE_TIMEOUT_MS);
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "HEAD",
+      cache: "no-store",
+      mode: "cors",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+      signal: controller.signal,
+    });
+  } catch {
+    // A timed-out request used this attempt's budget; the next attempt retries.
+    if (controller.signal.aborted) return false;
+    return canLoadVideo(url, VIDEO_PROBE_TIMEOUT_MS - (Date.now() - startedAt));
+  } finally {
+    clearTimeout(timeout);
+  }
+  return response.ok;
+}
+
 /** New files 404 until automated checks finish. Poll with backoff, bounded. */
 async function waitUntilServed(url, isVideo) {
   const deadline = Date.now() + (isVideo ? PENDING_VIDEO_WAIT_MS : PENDING_WAIT_MS);
   let delay = 1_000;
   while (Date.now() < deadline) {
     await new Promise((resolve) => setTimeout(resolve, delay));
-    if (await (isVideo ? canLoadVideo(url) : canLoadImage(url))) return true;
+    if (await (isVideo ? isVideoServed(url) : canLoadImage(url))) return true;
     delay = Math.min(delay * 2, PENDING_MAX_DELAY_MS);
   }
   return false;
