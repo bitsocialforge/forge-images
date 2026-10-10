@@ -20,7 +20,7 @@ security headers on Cloudflare Pages.
 
 Deploy: create a Cloudflare Pages project from this repository with no build command and `site` as the output
 directory, then attach the custom domain `images.bitsocialforge.com`. The Turnstile widget must list that
-hostname. Before the public launch, set the effective date on `site/legal.html` (`[[EFFECTIVE_DATE]]`).
+hostname. When the legal text changes, update the effective date at the top of `site/legal.html`.
 
 Local preview:
 
