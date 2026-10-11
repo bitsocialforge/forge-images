@@ -7,82 +7,10 @@
     <meta name="description" content="Report a file hosted on Forge Images." />
     <meta name="theme-color" content="#050302" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script type="module" src="/assets/report.js"></script>
-    <script defer src="/_vercel/insights/script.js"></script>
+    <link rel="stylesheet" href="/src/styles/site.css" />
+    <script type="module" src="/src/entries/report.tsx"></script>
   </head>
   <body>
-    <div class="page">
-      <header class="site-header">
-        <a href="/"><img src="/assets/lockup.svg" alt="Forge Images" width="341" height="57" /></a>
-        <nav class="site-nav" aria-label="Site">
-          <a href="/">Upload</a>
-          <a href="/faq.html">FAQ</a>
-          <a href="/legal.html">Legal</a>
-          <a href="/report.html" aria-current="page">Report</a>
-        </nav>
-      </header>
-
-      <main>
-        <h1>Report a file</h1>
-        <p class="lede">
-          Use this form to report a file that breaks the <a href="/legal.html#acceptable-use">Acceptable Use Policy</a>
-          or the law. Reported files are re-checked automatically right away. A person reads every email to
-          <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a>, so email us too when a report is
-          urgent. Illegal files are removed at every link that points to them.
-        </p>
-        <ul>
-          <li>
-            <strong>Child sexual abuse material:</strong> choose that reason below <em>and</em> email the link to
-            <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> so a person acts on it immediately.
-            Do not download, screenshot, or share it. You can also report it to
-            <a href="https://report.cybertip.org/">NCMEC's CyberTipline</a> or your local police.
-          </li>
-          <li>
-            <strong>Copyright:</strong> this form triggers a re-check, but a formal takedown needs a DMCA notice. See
-            <a href="/legal.html#copyright">Copyright and DMCA</a>.
-          </li>
-          <li>
-            You can also email <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a>, for example to
-            include screenshots of where the file was posted.
-          </li>
-        </ul>
-
-        <form id="report-form" novalidate>
-          <div class="field">
-            <label for="report-url">Link to the file</label>
-            <input id="report-url" name="url" type="url" required placeholder="https://forgeimg.net/…" />
-          </div>
-          <div class="field">
-            <label for="report-reason">Reason</label>
-            <select id="report-reason" name="reason">
-              <option value="illegal">Illegal content (other than below)</option>
-              <option value="csam">Child sexual abuse material</option>
-              <option value="dmca">Copyright infringement</option>
-              <option value="other">Other Acceptable Use Policy violation</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="report-detail">Details (optional)</label>
-            <textarea id="report-detail" name="detail" maxlength="4000"></textarea>
-          </div>
-          <p class="muted">
-            We record your report and your IP address to handle it and to prevent abuse of this form. See the
-            <a href="/legal.html#privacy">Privacy Policy</a>.
-          </p>
-          <button id="report-submit" class="button" type="submit">Send report</button>
-          <p id="report-status" class="form-status" role="status"></p>
-        </form>
-      </main>
-
-      <footer class="site-footer">
-        <p>Forge Images is operated by <a href="https://bitsocialforge.com">Bitsocial Forge Inc.</a></p>
-        <p>
-          Abuse: <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> · Copyright:
-          <a href="mailto:dmca@bitsocialforge.com">dmca@bitsocialforge.com</a> · Privacy:
-          <a href="mailto:privacy@bitsocialforge.com">privacy@bitsocialforge.com</a>
-        </p>
-      </footer>
-    </div>
+    <div id="root"><!--app-html--></div>
   </body>
 </html>

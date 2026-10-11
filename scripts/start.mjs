@@ -1,10 +1,12 @@
-// `yarn start`: serves the site locally under its production CSP and opens it. Uploads and reports go to a
-// local Forge Images API, which runs from the private server repo (`yarn start` there).
+// `yarn start`: runs the Vite dev server (React Refresh, Agentation) under the production CSP from vercel.json and
+// opens it. vite.config.ts applies the headers, swaps the CSP's API and media origins for the local API, and adds
+// the dev-only CSP sources Vite needs. Uploads and reports go to a local Forge Images API, which runs from the
+// private server repo (`yarn start` there).
 // Through portless the site is https://forge-images.localhost and expects the API at
-// https://api.forge-images.localhost: site/assets/config.js always uses api.<site host>. On a branch other than
+// https://api.forge-images.localhost: site/src/lib/config.ts always uses api.<site host>. On a branch other than
 // master the site gets a branch label (https://<branch>.forge-images.localhost), so run the server repo on a
 // branch with the same name. PORTLESS=0 (and Windows) serves on http://localhost:8080 (or the next free port)
-// with the API at http://127.0.0.1:3917, the address config.js expects. BROWSER=none skips opening it.
+// with the API at http://127.0.0.1:3917, the address config.ts expects. BROWSER=none skips opening it.
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { get as httpGet } from "node:http";
@@ -13,9 +15,11 @@ import { createServer } from "node:net";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
-const siteServer = fileURLToPath(new URL("serve-site.mjs", import.meta.url));
 const isWindows = process.platform === "win32";
 const portlessBin = fileURLToPath(new URL(`../node_modules/.bin/portless${isWindows ? ".cmd" : ""}`, import.meta.url));
+// portless recognizes Vite by the command's basename; without portless, Node runs Vite directly (no shell on Windows).
+const viteBin = fileURLToPath(new URL("../node_modules/.bin/vite", import.meta.url));
+const viteEntry = fileURLToPath(new URL("../node_modules/vite/bin/vite.js", import.meta.url));
 const usePortless = process.env.PORTLESS !== "0" && !isWindows && existsSync(portlessBin);
 const portlessEnv = {
   ...process.env,
@@ -112,7 +116,8 @@ if (usePortless) {
   const appName = getPortlessAppName();
   siteUrl = `https://${appName}.localhost`;
   apiOrigin = `https://api.${appName}.localhost`;
-  child = spawn(portlessBin, [appName, process.execPath, siteServer], {
+  // portless passes Vite its --port and --host.
+  child = spawn(portlessBin, [appName, viteBin], {
     cwd: repoRoot,
     env: { ...portlessEnv, SITE_API_ORIGIN: apiOrigin },
     stdio: "inherit",
@@ -122,9 +127,9 @@ if (usePortless) {
   while (!(await isPortFree(sitePort))) sitePort += 1;
   siteUrl = `http://localhost:${sitePort}`;
   apiOrigin = "http://127.0.0.1:3917";
-  child = spawn(process.execPath, [siteServer], {
+  child = spawn(process.execPath, [viteEntry, "--host", "127.0.0.1", "--port", String(sitePort), "--strictPort"], {
     cwd: repoRoot,
-    env: { ...process.env, PORT: String(sitePort), SITE_API_ORIGIN: apiOrigin },
+    env: { ...process.env, SITE_API_ORIGIN: apiOrigin },
     stdio: "inherit",
   });
 }

@@ -1,0 +1,344 @@
+import { SiteLayout } from "../components/site-layout";
+
+// When the legal text changes, update the effective date below.
+export function LegalPage() {
+  return (
+    <SiteLayout current="legal">
+      <h1>Legal</h1>
+      <p className="lede">Effective October 11, 2026.</p>
+
+      <nav className="toc" aria-label="Contents">
+        <ol>
+          <li>
+            <a href="#terms">Terms of Service</a>
+          </li>
+          <li>
+            <a href="#acceptable-use">Acceptable Use Policy</a>
+          </li>
+          <li>
+            <a href="#privacy">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#copyright">Copyright and DMCA</a>
+          </li>
+          <li>
+            <a href="#child-safety">Child safety</a>
+          </li>
+          <li>
+            <a href="#contact">Contact</a>
+          </li>
+        </ol>
+      </nav>
+
+      <h2 id="terms">Terms of Service</h2>
+
+      <h3>Who we are</h3>
+      <p>
+        Forge Images is a free media hosting service operated by Bitsocial Forge Inc., a Delaware corporation ("we",
+        "us"). These terms cover images.bitsocialforge.com, forgeimg.net, img-api.bitsocialforge.com, and uploads made
+        through apps that use Forge Images, such as 5chan. By uploading a file you agree to these terms, the{" "}
+        <a href="#acceptable-use">Acceptable Use Policy</a>, and the <a href="#privacy">Privacy Policy</a>. If you do
+        not agree, do not upload.
+      </p>
+
+      <h3>Who can upload</h3>
+      <p>
+        You must be at least 18, or the age of majority where you live if that is higher. You may not use the service if
+        you are located in a country or region under comprehensive US sanctions, or if you are on a US sanctions list.
+      </p>
+
+      <h3>Your files</h3>
+      <ul>
+        <li>You keep ownership of what you upload.</li>
+        <li>
+          You confirm that you have the right to upload each file and that it does not break the Acceptable Use Policy
+          or the law.
+        </li>
+        <li>
+          You give us a worldwide, non-exclusive, royalty-free license to store, copy, process, cache, distribute, and
+          display your files as needed to run, secure, and moderate the service. Processing includes removing metadata
+          and scanning files for abuse.
+        </li>
+        <li>
+          Uploaded files are public. Anyone with a link can view the file, and links can be shared and indexed. Do not
+          upload anything you want to keep private.
+        </li>
+      </ul>
+
+      <h3>No expiry, no guarantee</h3>
+      <p>
+        Files do not expire. We have no retention limit and no deletion schedule: we intend to host files indefinitely
+        and do not delete them for age or inactivity. "Permanent" describes this no-expiry policy. It is not a promise
+        that a file or the service will always be available. Files can still be removed under these terms, and the
+        service may change or shut down. If we shut it down, we will give reasonable notice where we can.
+      </p>
+      <p>
+        There are no accounts, so we cannot verify who uploaded a file and there is no self-service deletion. Keep your
+        own copies.
+      </p>
+
+      <h3>Moderation and removal</h3>
+      <p>
+        We check new uploads before serving them and re-check reported files, but we are not obliged to monitor the
+        service and are not responsible for what users upload. We may refuse, remove, or block any file, and block IP
+        addresses or integration keys, at our discretion. This includes enforcement against repeat copyright infringers.
+        A removed file stops working at every link that points to it.
+      </p>
+
+      <h3>Free service and fair use</h3>
+      <p>
+        The service is free. There are no paid tiers, subscriptions, or per-upload fees. Uploads are limited per
+        connection to keep the service available for everyone. You may embed and hotlink files anywhere for personal,
+        non-commercial use. Using Forge Images as a CDN or file host for a commercial product needs our prior written
+        permission. You may not bypass rate limits, the browser check, or other abuse controls.
+      </p>
+
+      <h3>Disclaimer</h3>
+      <p>
+        The service is provided "as is" and "as available", without warranties of any kind, express or implied,
+        including warranties of merchantability, fitness for a particular purpose, and non-infringement, to the fullest
+        extent the law allows.
+      </p>
+
+      <h3>Limitation of liability</h3>
+      <p>
+        To the fullest extent the law allows, Bitsocial Forge Inc. and its officers, employees, and agents are not
+        liable for any indirect, incidental, special, consequential, or punitive damages, or for lost data, profits, or
+        revenue, arising from your use of or inability to use the service. Our total liability for any claim related to
+        the service is limited to US$50. Some places do not allow these limits, so they may not apply to you.
+      </p>
+
+      <h3>Indemnity</h3>
+      <p>
+        You agree to indemnify Bitsocial Forge Inc. against claims, losses, and costs, including reasonable legal fees,
+        arising from files you upload or from your breach of these terms.
+      </p>
+
+      <h3>Changes</h3>
+      <p>
+        We may update these terms. We will post the new version here with a new effective date. Using the service after
+        an update means you accept it.
+      </p>
+
+      <h3>Governing law</h3>
+      <p>
+        These terms are governed by the laws of the State of Delaware, USA, and disputes go to the state or federal
+        courts located in Delaware. This does not remove protections that the consumer law of your country gives you and
+        that cannot be waived by contract.
+      </p>
+
+      <h2 id="acceptable-use">Acceptable Use Policy</h2>
+      <p>
+        Legal content is welcome, including adult and NSFW content involving consenting adults. The following is not
+        allowed:
+      </p>
+      <ul>
+        <li>
+          Child sexual abuse material, or any sexualized depiction of a minor, including drawn, animated, or
+          AI-generated images. See <a href="#child-safety">Child safety</a>.
+        </li>
+        <li>Intimate images of a real person shared without their consent, including sexual deepfakes.</li>
+        <li>Extreme real-world gore. Newsworthy or documentary images may stay at our discretion.</li>
+        <li>Terrorist or violent extremist propaganda.</li>
+        <li>Doxxing: files whose purpose is to publish someone's private identifying information.</li>
+        <li>Threats, and content meant to harass a real person.</li>
+        <li>Malware, exploits, or files designed to harm devices, including malicious SWF files.</li>
+        <li>Spam, phishing, scams, and fraud.</li>
+        <li>Files that infringe copyright or other intellectual property rights.</li>
+        <li>Anything else that is illegal under US law.</li>
+        <li>
+          Abusing the service: automated bulk uploading without an integration key, or bypassing rate limits, the
+          browser check, or other abuse controls.
+        </li>
+      </ul>
+      <p>
+        We may remove violating files, permanently block identical re-uploads, block IP addresses and integration keys,
+        and report illegal content to the authorities where the law requires it.
+      </p>
+
+      <h2 id="privacy">Privacy Policy</h2>
+      <p>
+        Bitsocial Forge Inc. is responsible for the personal data described here. Questions and requests:{" "}
+        <a href="mailto:privacy@bitsocialforge.com">privacy@bitsocialforge.com</a>.
+      </p>
+
+      <h3>What we collect</h3>
+      <ul>
+        <li>
+          <strong>Your files</strong> and facts about them: content hash, size, type, upload time, and the filename,
+          which becomes part of the link unless you leave it out.
+        </li>
+        <li>
+          <strong>Your IP address</strong>, linked to the files it uploaded. We delete it after about 90 days. If a file
+          is reported or removed, the related records are kept for up to one year from upload, then deleted.
+        </li>
+        <li>
+          <strong>Rate-limit counters</strong> keyed to your IP address, deleted after two days.
+        </li>
+        <li>
+          <strong>Reports</strong> you send through the report form: the link, reason, details, and your IP address,
+          kept as records of how we handled the report.
+        </li>
+        <li>
+          <strong>Emails</strong> you send us, kept as long as needed to deal with them and as legal records.
+        </li>
+        <li>
+          <strong>Short-lived server logs</strong> used to run and secure the service.
+        </li>
+      </ul>
+      <p>
+        We remove EXIF (including GPS location), XMP, IPTC, and comments from JPEG, PNG, and WebP files before storing
+        them, keeping only the rotation setting so photos display the right way up. We remove container metadata,
+        including location, from MP4 and WebM videos. GIF and SWF files are stored exactly as uploaded, and an image
+        that cannot be processed safely is stored as uploaded. Remove sensitive information yourself before uploading.
+      </p>
+
+      <h3>What we do not do</h3>
+      <p>
+        No accounts, no advertising, and no tracking across sites. This site sets no cookies. We do not sell or share
+        personal data for advertising. We do not track who views files; Cloudflare processes request data, such as IP
+        addresses, to deliver them. We count visits to this website (pages viewed, referring site, country, browser and
+        device type) with Vercel Web Analytics, which uses no cookies and does not identify you.
+      </p>
+
+      <h3>Who processes data for us</h3>
+      <ul>
+        <li>
+          <strong>Cloudflare</strong> delivers and protects the service, stores files, runs the browser check before
+          uploads (<a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy addendum</a>), and
+          scans served files for known child sexual abuse material.{" "}
+          <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a>.
+        </li>
+        <li>
+          <strong>OpenAI</strong> receives new images, and still frames sampled from new videos, for automated
+          moderation through its API. OpenAI does not train on API data by default and may keep it for up to 30 days to
+          detect abuse. <a href="https://openai.com/enterprise-privacy/">OpenAI API privacy</a>.
+        </li>
+        <li>
+          <strong>Vercel</strong> hosts this website and counts its visits.{" "}
+          <a href="https://vercel.com/legal/privacy-policy">Vercel privacy policy</a>.
+        </li>
+        <li>
+          <strong>Our server host</strong> in the United States runs the upload service.
+        </li>
+      </ul>
+
+      <h3>When we disclose data</h3>
+      <p>
+        We disclose data when the law requires it, including reports of apparent child sexual abuse material to the
+        National Center for Missing &amp; Exploited Children (NCMEC), and when needed to protect someone from serious
+        harm.
+      </p>
+
+      <h3>Where data is stored</h3>
+      <p>In the United States. Cloudflare serves files from data centers worldwide.</p>
+
+      <h3>Legal bases and your rights</h3>
+      <p>
+        If you are in the EU, EEA, or UK, we process this data based on our legitimate interest in running a secure
+        service and preventing abuse, and to meet legal obligations. You can ask to access, correct, or delete your
+        data, or object to its processing, by emailing{" "}
+        <a href="mailto:privacy@bitsocialforge.com">privacy@bitsocialforge.com</a>. Uploads are anonymous, so we may
+        need the file link and the approximate upload time to find records. You can also complain to your data
+        protection authority. Requests to remove a file go through <a href="/report">the report form</a> or{" "}
+        <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a>.
+      </p>
+
+      <h3>Children</h3>
+      <p>The service is not for anyone under 18.</p>
+
+      <h2 id="copyright">Copyright and DMCA</h2>
+      <p>
+        We respond to notices of claimed copyright infringement under the US Digital Millennium Copyright Act (17 U.S.C.
+        §512). Send notices to our designated agent:
+      </p>
+      <p>
+        Copyright Agent, Bitsocial Forge Inc.
+        <br /> 1021 E Lincolnway, PMB 7723
+        <br /> Cheyenne, WY 82001, USA
+        <br /> Phone: +1 888-994-4981
+        <br /> Email: <a href="mailto:dmca@bitsocialforge.com">dmca@bitsocialforge.com</a>
+      </p>
+
+      <h3>What a notice must include</h3>
+      <ol>
+        <li>A physical or electronic signature of the copyright owner or a person authorized to act for them.</li>
+        <li>Identification of the copyrighted work you claim is infringed.</li>
+        <li>The link to each file you want removed.</li>
+        <li>Your name, address, phone number, and email address.</li>
+        <li>
+          A statement that you believe in good faith that the use is not authorized by the copyright owner, its agent,
+          or the law.
+        </li>
+        <li>
+          A statement that the information in the notice is accurate and, under penalty of perjury, that you are
+          authorized to act for the copyright owner.
+        </li>
+      </ol>
+      <p>
+        When we receive a valid notice, we disable the file at every link that points to it and block identical
+        re-uploads.
+      </p>
+
+      <h3>Counter-notices</h3>
+      <p>If you believe a file was removed by mistake, send a counter-notice to the agent above with:</p>
+      <ol>
+        <li>Your physical or electronic signature.</li>
+        <li>The link to the removed file.</li>
+        <li>
+          A statement under penalty of perjury that you believe in good faith the file was removed by mistake or
+          misidentification.
+        </li>
+        <li>Your name, address, and phone number.</li>
+        <li>
+          Your consent to the jurisdiction of the US federal district court for your address or, if you are outside the
+          US, any judicial district where we may be found, and that you will accept service of process from the person
+          who sent the notice.
+        </li>
+      </ol>
+      <p>
+        We forward valid counter-notices to the person who sent the notice. Unless they tell us they have filed a court
+        action, we restore the file 10 to 14 business days later. The same link works again.
+      </p>
+
+      <h3>Repeat infringers</h3>
+      <p>We block uploads from IP addresses and integration keys that repeatedly upload infringing files.</p>
+      <p>
+        Knowingly false notices or counter-notices can make you liable for damages under 17 U.S.C. §512(f). For
+        copyright complaints outside the US, email <a href="mailto:dmca@bitsocialforge.com">dmca@bitsocialforge.com</a>.
+      </p>
+
+      <h2 id="child-safety">Child safety</h2>
+      <p>
+        We have zero tolerance for child sexual abuse material. When we find it, we remove it, permanently block the
+        file from being uploaded again, preserve the records the law requires, and report it to NCMEC's CyberTipline, as
+        US law (18 U.S.C. §2258A) requires. Cloudflare scans files we serve for known material.
+      </p>
+      <p>
+        If you see it, email the link to <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a>, where a
+        person reads every message, and use the <a href="/report">report form</a>, which triggers an automatic re-check.
+        You can also report it directly to <a href="https://report.cybertip.org/">NCMEC's CyberTipline</a> or to your
+        local police. Do not download, screenshot, or share it, even to report it.
+      </p>
+
+      <h2 id="contact">Contact</h2>
+      <ul>
+        <li>
+          Abuse and illegal content: <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> or the{" "}
+          <a href="/report">report form</a>
+        </li>
+        <li>
+          Copyright: <a href="mailto:dmca@bitsocialforge.com">dmca@bitsocialforge.com</a>
+        </li>
+        <li>
+          Privacy: <a href="mailto:privacy@bitsocialforge.com">privacy@bitsocialforge.com</a>
+        </li>
+        <li>Mail: Bitsocial Forge Inc., 1021 E Lincolnway, PMB 7723, Cheyenne, WY 82001, USA</li>
+      </ul>
+      <p>
+        Authorities, including those of EU member states and the European Commission, and users can reach our single
+        point of contact at <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a>, in English.
+      </p>
+    </SiteLayout>
+  );
+}
