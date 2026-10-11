@@ -34,8 +34,9 @@ export interface UploadOptions extends ClientOptions {
   /** Cloudflare Turnstile token; required for anonymous uploads (no apiKey). Single use. */
   turnstileToken?: string;
   /**
-   * Name shown in the URL. Omit to use the File's name, pass a string to set it,
-   * or `null` to leave the name out and get the canonical `/<sha256>.<ext>` URL.
+   * Name shown in the URL. Omit to use the File's name (for uploadUrl, the download's Content-Disposition filename or
+   * the link's last path segment), pass a string to set it, or `null` to leave the name out and get the canonical
+   * `/<sha256>.<ext>` URL.
    */
   filename?: string | null;
 }
@@ -88,11 +89,8 @@ function authHeaders(apiKey: string | undefined): Record<string, string> | undef
   return apiKey ? { Authorization: `Bearer ${apiKey}` } : undefined;
 }
 
-/**
- * Uploads one file. Anonymous uploads need a fresh Turnstile token for each call.
- * @throws ForgeImagesError for API errors (403 Turnstile/ban, 413 too large, 415 type, 429 rate limit, ...).
- */
-export async function uploadFile(file: Blob, options: UploadOptions = {}): Promise<UploadResult> {
+/** Posts one upload; `source` becomes the request's single `file` or `url` part. */
+async function postUpload(source: { file: Blob } | { url: string }, options: UploadOptions): Promise<UploadResult> {
   const { apiOrigin = DEFAULT_API_ORIGIN, apiKey, turnstileToken, filename, signal } = options;
   const doFetch = options.fetch ?? fetch;
   if (!apiKey && !turnstileToken) {
@@ -100,10 +98,11 @@ export async function uploadFile(file: Blob, options: UploadOptions = {}): Promi
   }
 
   const form = new FormData();
-  // Text fields first: the API settles Turnstile before reading the file.
+  // Text fields first: the API settles Turnstile before reading the file or fetching the link.
   if (turnstileToken) form.append("turnstile", turnstileToken);
   if (filename !== undefined) form.append("filename", filename ?? "");
-  form.append("file", file);
+  if ("file" in source) form.append("file", source.file);
+  else form.append("url", source.url);
 
   const response = await doFetch(`${trimOrigin(apiOrigin)}/api/upload`, {
     method: "POST",
@@ -121,6 +120,34 @@ export async function uploadFile(file: Blob, options: UploadOptions = {}): Promi
     throw new ForgeImagesError(response.status, "bad_response", "Upload response is missing url, sha256, or status");
   }
   return body as UploadResult;
+}
+
+/**
+ * Uploads one file. Anonymous uploads need a fresh Turnstile token for each call.
+ * @throws ForgeImagesError for API errors (403 Turnstile/ban, 413 too large, 415 type, 429 rate limit, ...).
+ */
+export async function uploadFile(file: Blob, options: UploadOptions = {}): Promise<UploadResult> {
+  return postUpload({ file }, options);
+}
+
+/**
+ * Uploads the file at an http(s) link: the API downloads it from its own address and treats it like an uploaded
+ * file (same types, limits, moderation, and result). Anonymous uploads need a fresh Turnstile token for each call.
+ * @throws TypeError unless `url` is an absolute http or https URL.
+ * @throws ForgeImagesError for API errors: 400 `invalid_url` or `url_not_allowed`, 422 `url_fetch_failed`, and
+ *   the same errors as uploadFile.
+ */
+export async function uploadUrl(url: string | URL, options: UploadOptions = {}): Promise<UploadResult> {
+  let parsed: URL | null = null;
+  try {
+    parsed = new URL(url);
+  } catch {
+    // Not a URL; refused below.
+  }
+  if (parsed?.protocol !== "http:" && parsed?.protocol !== "https:") {
+    throw new TypeError("uploadUrl needs an absolute http or https URL");
+  }
+  return postUpload({ url: parsed.href }, options);
 }
 
 /** Reports a file. The API always answers 202, whether or not the file exists. */
