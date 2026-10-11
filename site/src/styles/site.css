@@ -69,7 +69,8 @@
   --coal: #140a04;
   --ok: #9ccc7a;
   --error: #ff7a6b;
-  --mono: "Spline Sans Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --system-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --mono: "Spline Sans Mono", var(--system-mono);
   --display: Exo, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
@@ -284,6 +285,8 @@ a:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  /* The platform's own monospace reads lighter than Spline Sans Mono in the top bar. */
+  font-family: var(--system-mono);
 }
 
 .site-nav a {
@@ -366,15 +369,6 @@ code {
 }
 
 /* Upload */
-
-/* The one line everyone should read, in place of a hero. */
-.upload-notice {
-  margin: 56px 0 0;
-  font-family: var(--display);
-  font-size: 20px;
-  line-height: 1.4;
-  text-wrap: balance;
-}
 
 /* The dashed box: the picker button on top, then the results. */
 .dropzone {
@@ -495,7 +489,6 @@ code {
   background: none;
   color: var(--ember);
   font: inherit;
-  text-decoration: underline;
   cursor: pointer;
 }
 
@@ -604,18 +597,45 @@ textarea {
   font: inherit;
 }
 
+/* A focused field lights its own border instead of drawing the outline ring around it. */
+input[type="text"]:focus-visible,
+input[type="url"]:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--ember);
+}
+
 textarea {
   min-height: 120px;
   resize: vertical;
 }
 
-.field {
-  margin-top: 16px;
+/* Report */
+
+.report-notes {
+  margin-top: 24px;
+}
+
+.report-notes li + li {
+  margin-top: 12px;
+}
+
+.report-form {
+  margin-top: 48px;
+}
+
+.field + .field {
+  margin-top: 24px;
 }
 
 .field label {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.form-note {
+  margin: 28px 0 20px;
 }
 
 .form-status {
@@ -662,11 +682,6 @@ textarea {
 @media (max-width: 480px) {
   h1 {
     font-size: 26px;
-  }
-
-  .upload-notice {
-    margin-top: 40px;
-    font-size: 18px;
   }
 
   .dropzone-button {

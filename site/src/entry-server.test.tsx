@@ -14,11 +14,11 @@ describe("renderPage", () => {
     expect(html).toContain('<h2 id="child-safety">Child safety</h2>');
   });
 
-  it("leads the upload page with the limits line and keeps the results inside the drop box", () => {
+  it("leads the upload page with the title and a short lede and keeps the results inside the drop box", () => {
     const html = renderPage("index");
-    expect(html).toContain('<h1 class="visually-hidden">Free image and video hosting</h1>');
+    expect(html).toContain("<h1>Free image and video hosting</h1>");
     expect(html).toContain(
-      'Images up to 10 MB, GIFs and SWFs up to 20 MB, videos up to 50 MB<!-- -->. You should <a href="/faq">read the FAQ</a>.',
+      'Anonymous, free, and no expiry. Upload an image or video and get a link you can post anywhere. See the<!-- --> <a href="/faq">FAQ</a> for details.',
     );
     const dropzone = html.slice(html.indexOf('<section id="dropzone"'), html.indexOf("</section>"));
     expect(dropzone).toMatch(/^<section id="dropzone"[^>]*><button id="choose-button"[^>]*>/);

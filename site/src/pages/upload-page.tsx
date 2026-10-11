@@ -3,15 +3,7 @@ import { flushSync } from "react-dom";
 import { ResultRow, type UploadRow } from "../components/result-row";
 import { SiteLayout } from "../components/site-layout";
 import { resolveSiteConfig } from "../lib/config";
-import {
-  checkFile,
-  checkUrl,
-  describeLimits,
-  sendOne,
-  sendUrl,
-  type SendOptions,
-  type UploadRowHandle,
-} from "../lib/upload";
+import { checkFile, checkUrl, sendOne, sendUrl, type SendOptions, type UploadRowHandle } from "../lib/upload";
 
 const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,.swf,application/x-shockwave-flash";
 
@@ -130,9 +122,10 @@ export function UploadPage() {
 
   return (
     <SiteLayout current="upload">
-      <h1 className="visually-hidden">Free image and video hosting</h1>
-      <p className="upload-notice">
-        {describeLimits()}. You should <a href="/faq">read the FAQ</a>.
+      <h1>Free image and video hosting</h1>
+      <p className="lede">
+        Anonymous, free, and no expiry. Upload an image or video and get a link you can post anywhere. See the{" "}
+        <a href="/faq">FAQ</a> for details.
       </p>
 
       <section

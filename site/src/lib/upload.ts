@@ -37,20 +37,6 @@ export function formatSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-const KIND_NAMES: Record<FileKind, string> = { image: "images", gif: "GIFs", swf: "SWFs", video: "videos" };
-
-/** "Images up to 10 MB, GIFs and SWFs up to 20 MB, videos up to 50 MB", from the limits in config.ts. */
-export function describeLimits(limits: Record<FileKind, number> = LIMITS): string {
-  const kindsByLimit = new Map<number, string[]>();
-  for (const kind of Object.keys(KIND_NAMES) as FileKind[]) {
-    kindsByLimit.set(limits[kind], [...(kindsByLimit.get(limits[kind]) ?? []), KIND_NAMES[kind]]);
-  }
-  const text = [...kindsByLimit]
-    .map(([bytes, names]) => `${names.join(" and ")} up to ${bytes / (1024 * 1024)} MB`)
-    .join(", ");
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
 /** The type and size checks a file passes before it is queued, or the message for its row. */
 export function checkFile(
   file: Pick<File, "name" | "type" | "size">,
