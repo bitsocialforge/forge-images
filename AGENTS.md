@@ -9,9 +9,10 @@ must not be copied here.
 ## Rules
 
 - Use Corepack-managed Yarn 4 (`corepack yarn`), never npm. Pin exact versions and keep `yarn.lock` in sync.
-- Keep the site plain static HTML/CSS/ES modules with no build step. It deploys to Cloudflare Pages from `site/`;
-  `site/_headers` sets its CSP. Match the bitsocialforge.com look: square edges, 1px borders, the ember palette,
-  no external fonts or trackers.
+- Keep the site plain static HTML/CSS/ES modules with no build step. Vercel deploys `site/` from `master`;
+  `vercel.json` sets its CSP and headers. Match the bitsocialforge.com look: square edges, 1px borders, the ember
+  palette, no external fonts or third-party trackers. Vercel Web Analytics (first-party, cookieless) is the only
+  analytics, and `site/legal.html` discloses it.
 - Site copy (FAQ, legal, upload limits) must match the server's actual behavior. Check the server repo before
   changing a claim, and update `docs/API.md` when the contract changes.
 - Keep `packages/client` dependency-free and in sync with `docs/API.md`.

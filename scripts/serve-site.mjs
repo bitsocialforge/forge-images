@@ -1,5 +1,5 @@
-// Serves site/ locally the way Cloudflare Pages serves images.bitsocialforge.com: extensionless URLs
-// resolve to .html files and site/_headers applies, so the local site runs under the production CSP.
+// Serves site/ locally the way Vercel serves images.bitsocialforge.com: extensionless URLs resolve to
+// .html files (cleanUrls) and the headers in vercel.json apply, so the local site runs under the production CSP.
 // The CSP's API and media origins are swapped for the local API (SITE_API_ORIGIN), which also serves
 // uploaded media under DEV_SERVE. Started by scripts/start.mjs (`yarn start`).
 import { createServer } from "node:http";
@@ -8,6 +8,7 @@ import { extname, join, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../site", import.meta.url));
+const vercelConfig = fileURLToPath(new URL("../vercel.json", import.meta.url));
 const apiOrigin = process.env.SITE_API_ORIGIN || "http://127.0.0.1:3917";
 const productionOrigins = ["https://img-api.bitsocialforge.com", "https://forgeimg.net"];
 
@@ -22,28 +23,17 @@ const contentTypes = {
   ".woff2": "font/woff2",
 };
 
-// Pages `_headers` format: an unindented URL pattern (`*` matches anything), then indented
-// `Name: value` lines. Re-read per request so edits apply without a restart.
+// `headers` from vercel.json; each `source` is matched as an anchored regular expression, which covers
+// the `/(.*)` catch-all used there. Re-read per request so edits apply without a restart.
 async function getHeaderRules() {
-  const text = await readFile(join(root, "_headers"), "utf8");
-  const rules = [];
-  for (const line of text.split("\n")) {
-    if (!line.trim() || line.trim().startsWith("#")) continue;
-    if (!/^\s/.test(line)) {
-      const pattern = line
-        .trim()
-        .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
-        .replaceAll("*", ".*");
-      rules.push({ regExp: new RegExp(`^${pattern}$`), headers: [] });
-      continue;
-    }
-    const separator = line.indexOf(":");
-    if (separator === -1 || rules.length === 0) continue;
-    let value = line.slice(separator + 1).trim();
-    for (const origin of productionOrigins) value = value.replaceAll(origin, apiOrigin);
-    rules.at(-1).headers.push([line.slice(0, separator).trim(), value]);
-  }
-  return rules;
+  const { headers = [] } = JSON.parse(await readFile(vercelConfig, "utf8"));
+  return headers.map(({ source, headers: pairs }) => ({
+    regExp: new RegExp(`^${source}$`),
+    headers: pairs.map(({ key, value }) => {
+      for (const origin of productionOrigins) value = value.replaceAll(origin, apiOrigin);
+      return [key, value];
+    }),
+  }));
 }
 
 async function findFile(pathname) {
@@ -81,8 +71,12 @@ const server = createServer(async (req, res) => {
       return;
     }
 
-    // `_headers` is Pages configuration, not a published file.
-    const filePath = pathname === "/_headers" ? null : await findFile(pathname);
+    // Vercel injects the Web Analytics script in production; locally it is an empty module.
+    if (pathname.startsWith("/_vercel/insights/")) {
+      res.writeHead(200, { "Content-Type": "text/javascript; charset=utf-8" }).end();
+      return;
+    }
+    const filePath = await findFile(pathname);
     if (!filePath) {
       res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("Not found\n");
       return;
