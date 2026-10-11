@@ -1,7 +1,7 @@
 {
   "name": "forge-images",
   "private": true,
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "GPL-3.0-or-later",
   "description": "Forge Images public site, upload client, and API docs",
   "type": "module",
   "packageManager": "yarn@4.17.1",

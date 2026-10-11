@@ -16,7 +16,6 @@ must not be copied here.
   changing a claim, and update `docs/API.md` when the contract changes.
 - Keep `packages/client` dependency-free and in sync with `docs/API.md`.
 - Never commit secrets, server addresses, moderation thresholds, or operator procedures.
-- This repository is private until launch; do not change its visibility.
 
 ## Commands
 
