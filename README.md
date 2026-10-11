@@ -15,12 +15,12 @@ The hosted API server and moderation pipeline are private.
 
 ## Website
 
-Plain static HTML, CSS and ES modules with no build step. `site/_headers` sets the Content Security Policy and
-security headers on Cloudflare Pages.
+Plain static HTML, CSS and ES modules with no build step. `vercel.json` sets the Content Security Policy and
+security headers, with `site` as the output directory and no install or build step.
 
-Deploy: create a Cloudflare Pages project from this repository with no build command and `site` as the output
-directory, then attach the custom domain `images.bitsocialforge.com`. The Turnstile widget must list that
-hostname. When the legal text changes, update the effective date at the top of `site/legal.html`.
+Deploy: the Vercel project `forge-images` deploys `master` to production on every push and serves the custom
+domain `images.bitsocialforge.com` (DNS-only CNAME to Vercel), with Web Analytics on. The Turnstile widget must
+list that hostname. When the legal text changes, update the effective date at the top of `site/legal.html`.
 
 Local preview:
 
