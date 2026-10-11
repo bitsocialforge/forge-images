@@ -85,8 +85,8 @@ export function UploadPage() {
     <SiteLayout current="upload">
       <h1>Free image and video hosting</h1>
       <p className="lede">
-        Anonymous, free, and no expiry. Upload an image or video and get a link you can post anywhere. 5chan uses Forge
-        Images for its upload button.
+        Anonymous, free, and no expiry. Upload an image or video and get a link you can post anywhere.{" "}
+        <a href="https://5chan.app">5chan</a> uses Forge Images for its upload button.
       </p>
 
       <section
@@ -131,7 +131,7 @@ export function UploadPage() {
         ))}
       </ol>
 
-      <p className="muted">
+      <p className="muted upload-terms">
         By uploading you agree to the <a href="/legal#terms">Terms</a> and{" "}
         <a href="/legal#acceptable-use">Acceptable Use Policy</a>. Adult content is allowed; illegal content is not.
         Metadata such as GPS location is removed from images and videos before they are served. See the{" "}

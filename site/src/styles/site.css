@@ -7,6 +7,7 @@
   --text: #ffd9ad;
   --muted: #d99a63;
   --ember: #ff6a00;
+  --ember-hot: #ffa14d;
   --coal: #140a04;
   --ok: #9ccc7a;
   --error: #ff7a6b;
@@ -43,7 +44,163 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+/* Atmosphere: the furnace glow, scanlines, and rising embers from bitsocialforge.com, fixed behind the page. */
+
+.furnace-glow,
+.scanlines,
+.embers {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.furnace-glow {
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 45% at 50% 108%, rgba(255, 90, 0, 0.13), transparent 70%),
+    radial-gradient(ellipse 60% 30% at 50% 112%, rgba(255, 140, 40, 0.1), transparent 70%);
+}
+
+.scanlines {
+  z-index: 3;
+  background: repeating-linear-gradient(0deg, rgba(255, 140, 60, 0.028) 0 1px, transparent 1px 3px);
+  mix-blend-mode: screen;
+}
+
+.embers {
+  z-index: 1;
+  overflow: hidden;
+}
+
+.embers span {
+  position: absolute;
+  bottom: -2vh;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: var(--ember-hot);
+  box-shadow: 0 0 6px 1px rgba(255, 120, 20, 0.55);
+  opacity: 0;
+  animation: rise var(--dur) linear var(--delay) infinite;
+}
+
+/* Per-ember values (bitsocialforge.com's set), here instead of inline styles so the CSP needs no 'unsafe-inline'. */
+.embers span:nth-child(1) {
+  --x: 6%;
+  --s: 3px;
+  --dur: 11s;
+  --delay: 0s;
+  --drift: 18px;
+}
+.embers span:nth-child(2) {
+  --x: 14%;
+  --s: 2px;
+  --dur: 14s;
+  --delay: -3s;
+  --drift: -24px;
+}
+.embers span:nth-child(3) {
+  --x: 23%;
+  --s: 4px;
+  --dur: 9s;
+  --delay: -6s;
+  --drift: 30px;
+}
+.embers span:nth-child(4) {
+  --x: 31%;
+  --s: 2px;
+  --dur: 16s;
+  --delay: -1s;
+  --drift: -14px;
+}
+.embers span:nth-child(5) {
+  --x: 40%;
+  --s: 3px;
+  --dur: 12s;
+  --delay: -8s;
+  --drift: 22px;
+}
+.embers span:nth-child(6) {
+  --x: 48%;
+  --s: 2px;
+  --dur: 15s;
+  --delay: -4s;
+  --drift: -30px;
+}
+.embers span:nth-child(7) {
+  --x: 56%;
+  --s: 3px;
+  --dur: 10s;
+  --delay: -9s;
+  --drift: 12px;
+}
+.embers span:nth-child(8) {
+  --x: 63%;
+  --s: 2px;
+  --dur: 17s;
+  --delay: -2s;
+  --drift: -18px;
+}
+.embers span:nth-child(9) {
+  --x: 71%;
+  --s: 4px;
+  --dur: 11s;
+  --delay: -7s;
+  --drift: 26px;
+}
+.embers span:nth-child(10) {
+  --x: 79%;
+  --s: 2px;
+  --dur: 13s;
+  --delay: -5s;
+  --drift: -22px;
+}
+.embers span:nth-child(11) {
+  --x: 87%;
+  --s: 3px;
+  --dur: 12s;
+  --delay: -10s;
+  --drift: 16px;
+}
+.embers span:nth-child(12) {
+  --x: 94%;
+  --s: 2px;
+  --dur: 15s;
+  --delay: -1.5s;
+  --drift: -12px;
+}
+
+@keyframes rise {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  45% {
+    opacity: 0.5;
+    transform: translate(var(--drift), -48vh) scale(0.8);
+  }
+  80% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translate(calc(var(--drift) * 1.8), -102vh) scale(0.4);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .embers span {
+    animation: none;
+  }
+}
+
 .page {
+  position: relative;
+  z-index: 2;
   max-width: 760px;
   margin: 0 auto;
   padding: 24px 16px 48px;
@@ -80,7 +237,6 @@ a:focus-visible {
 .site-nav a:hover,
 .site-nav a:focus-visible {
   color: var(--text);
-  text-decoration: underline;
 }
 
 h1,
@@ -194,7 +350,7 @@ code {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 20px;
 }
 
 .option input {
@@ -208,9 +364,17 @@ code {
 }
 
 .results {
-  margin: 24px 0 0;
+  margin: 24px 0;
   padding: 0;
   list-style: none;
+}
+
+.results:empty {
+  display: none;
+}
+
+.upload-terms {
+  margin-top: 24px;
 }
 
 .result {
