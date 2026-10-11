@@ -4,64 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Forge Images · Free image and video hosting</title>
-    <meta name="description" content="Free, permanent, anonymous image hosting by Bitsocial Forge. The upload provider behind 5chan." />
+    <meta
+      name="description"
+      content="Free, permanent, anonymous image hosting by Bitsocial Forge. The upload provider behind 5chan."
+    />
     <meta name="theme-color" content="#050302" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/assets/site.css" />
-    <script type="module" src="/assets/upload.js"></script>
-    <script defer src="/_vercel/insights/script.js"></script>
+    <link rel="stylesheet" href="/src/styles/site.css" />
+    <script type="module" src="/src/entries/upload.tsx"></script>
   </head>
   <body>
-    <div class="page">
-      <header class="site-header">
-        <a href="/"><img src="/assets/lockup.svg" alt="Forge Images" width="341" height="57" /></a>
-        <nav class="site-nav" aria-label="Site">
-          <a href="/" aria-current="page">Upload</a>
-          <a href="/faq.html">FAQ</a>
-          <a href="/legal.html">Legal</a>
-          <a href="/report.html">Report</a>
-        </nav>
-      </header>
-
-      <main>
-        <h1>Free image and video hosting</h1>
-        <p class="lede">
-          Anonymous, free, and no expiry. Upload an image or video and get a link you can post anywhere. 5chan uses Forge Images
-          for its upload button.
-        </p>
-
-        <section id="dropzone" class="dropzone" aria-label="Upload files">
-          <button id="choose-button" class="button" type="button">Choose files</button>
-          <p>or drop them here, or paste with Ctrl+V</p>
-          <p class="muted">JPEG, PNG, WebP up to 10 MB · GIF and SWF up to 20 MB · MP4 and WebM up to 50 MB</p>
-          <input id="file-input" type="file" multiple hidden accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,.swf,application/x-shockwave-flash" />
-        </section>
-
-        <label class="option">
-          <input id="hide-filename" type="checkbox" />
-          Leave my filename out of the link
-        </label>
-
-        <div id="turnstile-slot" class="turnstile-slot"></div>
-
-        <ol id="results" class="results" aria-live="polite"></ol>
-
-        <p class="muted">
-          By uploading you agree to the <a href="/legal.html#terms">Terms</a> and
-          <a href="/legal.html#acceptable-use">Acceptable Use Policy</a>. Adult content is allowed; illegal content is
-          not. Metadata such as GPS location is removed from images and videos before they are served. See the
-          <a href="/legal.html#privacy">Privacy Policy</a>.
-        </p>
-      </main>
-
-      <footer class="site-footer">
-        <p>Forge Images is operated by <a href="https://bitsocialforge.com">Bitsocial Forge Inc.</a></p>
-        <p>
-          Abuse: <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> · Copyright:
-          <a href="mailto:dmca@bitsocialforge.com">dmca@bitsocialforge.com</a> · Privacy:
-          <a href="mailto:privacy@bitsocialforge.com">privacy@bitsocialforge.com</a>
-        </p>
-      </footer>
-    </div>
+    <div id="root"><!--app-html--></div>
   </body>
 </html>

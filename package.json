@@ -9,21 +9,36 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
   },
   "scripts": {
     "start": "node scripts/start.mjs",
-    "build": "yarn workspaces foreach -A run build",
-    "typecheck": "yarn workspaces foreach -A run typecheck",
+    "build": "yarn build:site && yarn build:client",
+    "build:site": "vite build && node scripts/prerender.mjs",
+    "build:client": "yarn workspace @bitsocialforge/forge-images-client run build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit && yarn workspace @bitsocialforge/forge-images-client run typecheck",
+    "lint": "oxlint --deny-warnings site scripts packages vite.config.ts vitest.config.ts",
     "test": "vitest run",
-    "format": "oxfmt packages scripts site/assets",
-    "format:check": "oxfmt --check packages scripts site/assets"
+    "format": "oxfmt packages scripts site vite.config.ts vitest.config.ts",
+    "format:check": "oxfmt --check packages scripts site vite.config.ts vitest.config.ts"
+  },
+  "dependencies": {
+    "@vercel/analytics": "2.0.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
   },
   "devDependencies": {
     "@types/node": "26.2.0",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.3",
+    "agentation": "3.0.2",
     "oxfmt": "0.66.0",
+    "oxlint": "1.72.0",
     "portless": "0.11.1",
     "typescript": "7.0.2",
+    "vite": "8.3.4",
     "vitest": "4.1.11"
   }
 }
