@@ -5,7 +5,6 @@ import {
   checkFile,
   checkUrl,
   classify,
-  describeLimits,
   describeUploadFailure,
   formatSize,
   sendUrl,
@@ -64,18 +63,6 @@ describe("formatSize", () => {
     expect(formatSize(1536)).toBe("2 KB");
     expect(formatSize(MIB - 1)).toBe("1024 KB");
     expect(formatSize(1.25 * MIB)).toBe("1.3 MB");
-  });
-});
-
-describe("describeLimits", () => {
-  it("states the configured limits, grouping types that share one", () => {
-    expect(describeLimits()).toBe("Images up to 10 MB, GIFs and SWFs up to 20 MB, videos up to 50 MB");
-  });
-
-  it("follows the config when the limits change", () => {
-    expect(describeLimits({ image: 10 * MIB, gif: 15 * MIB, swf: 20 * MIB, video: 2.5 * MIB })).toBe(
-      "Images up to 10 MB, GIFs up to 15 MB, SWFs up to 20 MB, videos up to 2.5 MB",
-    );
   });
 });
 

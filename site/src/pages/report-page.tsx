@@ -60,7 +60,7 @@ export function ReportPage() {
         <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a>, so email us too when a report is urgent.
         Illegal files are removed at every link that points to them.
       </p>
-      <ul>
+      <ul className="report-notes">
         <li>
           <strong>Child sexual abuse material:</strong> choose that reason below <em>and</em> email the link to{" "}
           <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> so a person acts on it immediately. Do
@@ -77,7 +77,7 @@ export function ReportPage() {
         </li>
       </ul>
 
-      <form id="report-form" noValidate onSubmit={(event) => void onSubmit(event)}>
+      <form id="report-form" className="report-form" noValidate onSubmit={(event) => void onSubmit(event)}>
         <div className="field">
           <label htmlFor="report-url">Link to the file</label>
           <input ref={urlRef} id="report-url" name="url" type="url" required placeholder="https://forgeimg.net/…" />
@@ -95,7 +95,7 @@ export function ReportPage() {
           <label htmlFor="report-detail">Details (optional)</label>
           <textarea ref={detailRef} id="report-detail" name="detail" maxLength={4000} />
         </div>
-        <p className="muted">
+        <p className="muted form-note">
           We record your report and your IP address to handle it and to prevent abuse of this form. See the{" "}
           <a href="/legal#privacy">Privacy Policy</a>.
         </p>
