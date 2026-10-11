@@ -16,7 +16,7 @@ await uploadFile(blob, { apiKey, filename: null });
 
 await reportFile({ url: result.url, reason: "illegal" });
 
-canonicalMediaUrl(result.url); // https://img.bitsocialforge.com/<sha256>.<ext>
+canonicalMediaUrl(result.url); // https://forgeimg.net/<sha256>.<ext>
 ```
 
 Errors from the API throw `ForgeImagesError` with `status`, `code`, `message`, and `retryAfterSeconds` for

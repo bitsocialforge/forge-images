@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../site", import.meta.url));
 const apiOrigin = process.env.SITE_API_ORIGIN || "http://127.0.0.1:3917";
-const productionOrigins = ["https://img-api.bitsocialforge.com", "https://img.bitsocialforge.com"];
+const productionOrigins = ["https://img-api.bitsocialforge.com", "https://forgeimg.net"];
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",

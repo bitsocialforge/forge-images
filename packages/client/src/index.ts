@@ -4,7 +4,7 @@
  */
 
 export const DEFAULT_API_ORIGIN = "https://img-api.bitsocialforge.com";
-export const DEFAULT_MEDIA_ORIGIN = "https://img.bitsocialforge.com";
+export const DEFAULT_MEDIA_ORIGIN = "https://forgeimg.net";
 
 /** `live` serves now; `pending` serves after moderation (seconds for images, longer when a person reviews it). */
 export type UploadStatus = "live" | "pending";
