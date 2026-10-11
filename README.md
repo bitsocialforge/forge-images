@@ -1,3 +1,10 @@
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="site/src/assets/lockup.svg">
+    <img src="docs/assets/lockup-light.svg" alt="Forge Images" width="341" height="57">
+  </picture>
+</p>
+
 # Forge Images
 
 Free, permanent media hosting by [Bitsocial Forge](https://bitsocialforge.com), and the upload provider behind
