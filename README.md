@@ -31,7 +31,7 @@ React 19 + TypeScript, built with Vite into static files: no server runtime.
 | `site/src/lib/` | Upload, Turnstile, and report logic, and the API endpoints for each environment (`config.ts`) |
 | `site/src/entries/`, `site/src/entry-server.tsx` | Client hydration entries and the Node renderer used for prerendering |
 | `site/src/styles/site.css` | All styles |
-| `site/public/` | Copied as-is: `favicon.svg`, `.well-known/security.txt` |
+| `site/public/` | Copied as-is: `favicon.svg`, `.well-known/security.txt`, and `fonts/` (the self-hosted Exo and Spline Sans Mono, with their licenses) |
 | `vite.config.ts`, `scripts/prerender.mjs` | Build config, local CSP headers, and the prerender step |
 
 `corepack yarn build:site` runs `vite build` and then prerenders every page into `dist/<page>.html`, so the text
@@ -91,6 +91,8 @@ corepack yarn build:client
 ## License
 
 - `packages/client`: MIT ([LICENSE](packages/client/LICENSE)).
+- The fonts in `site/public/fonts/` (Exo and Spline Sans Mono): SIL Open Font License 1.1, with the license texts
+  next to them ([THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
 - Everything else: GPL-3.0-or-later ([LICENSE](LICENSE)).
 
 The Forge Images and Bitsocial Forge names and logos are trademarks of Bitsocial Forge Inc. and are not licensed

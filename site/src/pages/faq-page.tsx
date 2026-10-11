@@ -39,6 +39,14 @@ export function FaqPage() {
       </ul>
       <p>Uploads are also limited per hour and per day for each connection.</p>
 
+      <h3>Can I upload from a link?</h3>
+      <p>
+        Yes. Choose "Upload via URL" below the upload box and paste a link to the file. Our server downloads the file
+        from its own address, not yours. Links to private or internal network addresses are refused. The same types,
+        size limits, and checks apply as for a file from your device, and uploads from links have a lower hourly limit.
+        The link you paste is not stored.
+      </p>
+
       <h3>How long are files kept?</h3>
       <p>
         Files do not expire. We do not delete files for age or inactivity. Files are removed only if they break the

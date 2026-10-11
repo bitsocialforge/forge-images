@@ -4,7 +4,8 @@ import { formatSize, type Tone } from "../lib/upload";
 export interface UploadRow {
   id: number;
   label: string;
-  size: number;
+  /** Bytes, or null for a link until the API reports the stored size. */
+  size: number | null;
   status: string;
   tone?: Tone;
   /** Upload progress from 0 to 1, or null while no upload is in flight. */
@@ -30,7 +31,7 @@ export function ResultRow({ row }: { row: UploadRow }) {
 
   return (
     <li className="result">
-      <div className="result-name">{`${row.label} (${formatSize(row.size)})`}</div>
+      <div className="result-name">{row.size === null ? row.label : `${row.label} (${formatSize(row.size)})`}</div>
       <p className="result-status" data-tone={row.tone}>
         {row.status}
       </p>

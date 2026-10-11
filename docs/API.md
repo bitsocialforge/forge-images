@@ -26,7 +26,8 @@ Never send credentials mode; nothing is cookie-authenticated.
 | Anonymous | A Cloudflare Turnstile token in the `turnstile` field, one per upload | Turnstile widgets only issue tokens on allowed hostnames |
 | Integration | `Authorization: Bearer <key>` header | Free keys for client integrations. No Turnstile; separate limits. Keys are never sold and buy no priority |
 
-Uploads are rate-limited per IP (anonymous) or per key (integration).
+Uploads are rate-limited per IP (anonymous) or per key (integration). Uploads by URL also count against a lower
+hourly limit per client IP, in both modes.
 
 ## POST /api/upload
 
@@ -34,9 +35,27 @@ Uploads are rate-limited per IP (anonymous) or per key (integration).
 
 | Part | Required | Notes |
 |---|---|---|
-| `turnstile` (text) | Anonymous uploads | Send it **before** the file part, so a bad token is rejected without reading the file |
-| `filename` (text) | No | Name shown in the URL; overrides the file part's filename. Send it empty to get the canonical URL without a name |
-| `file` (file) | Yes | One file per request |
+| `turnstile` (text) | Anonymous uploads | Send it **before** the `file` or `url` part, so a bad token is rejected without reading the file or fetching the link |
+| `filename` (text) | No | Name shown in the URL; overrides the file part's filename or the name taken from the link (below). Send it empty to get the canonical URL without a name |
+| `file` (file) | One of `file` or `url` | One file per request |
+| `url` (text) | One of `file` or `url` | An absolute `http` or `https` link the API downloads the file from. Send it after the other text fields |
+
+Send exactly one of `file` and `url`; both or neither is `400 bad_request`.
+
+With `url`, the API downloads the file from its own address and then treats it exactly like an uploaded file: same
+types, size limits, moderation, response, and pending behavior. A client cannot check a linked file's size or type
+before sending; the API enforces both (`413`, `415`). The download:
+
+- Accepts `http` and `https` links of at most 2048 characters, without a username or password, on the scheme's
+  default port.
+- Refuses links whose host resolves to a private or internal address, and follows at most 3 redirects, each checked
+  the same way.
+- Needs a `2xx` answer and must finish within 60 seconds. The remote `Content-Type` is ignored.
+- Sends no cookies and nothing from your request; the remote server sees the API's address, not yours.
+- Names the file, unless `filename` is sent, from the response's `Content-Disposition` filename, or else the last
+  path segment of the final URL.
+
+The API does not store the link.
 
 The type is decided by the file's contents (magic bytes), never by its name or declared type. A declared type
 that contradicts the contents is rejected.
@@ -100,16 +119,20 @@ Both return the same 1×1 PNG, so clients can probe availability with an `<img>`
 
 ## Errors
 
-Every error is `{"error": {"code": "...", "message": "..."}}` with a matching status.
+Every error is `{"error": {"code": "...", "message": "..."}}` with a matching status. Branch on `code`; `message` is
+short text suitable to show the uploader, not a stable contract.
 
 | Status | Code | Meaning |
 |---|---|---|
-| 400 | `bad_request` | Malformed multipart, missing file, or an invalid file container |
+| 400 | `bad_request` | Malformed multipart, neither or both of `file` and `url`, or an invalid file container |
+| 400 | `invalid_url` | The `url` field is not a valid `http` or `https` link, has a username or password, uses a non-default port, or is over 2048 characters |
+| 400 | `url_not_allowed` | The link, or a redirect, points to a private or internal address, or redirects to a link that would be `invalid_url` |
 | 401 | `bad_key` | The `Authorization` key is invalid or revoked |
 | 403 | `turnstile_failed` | Missing or invalid Turnstile token |
 | 403 | `banned` | The IP or key is banned |
 | 413 | `too_large` | Over the limit for the type and access mode |
 | 415 | `unsupported_type` | Type not accepted, or the declared type contradicts the contents |
+| 422 | `url_fetch_failed` | The linked file could not be downloaded: DNS, connection, or TLS failure, a non-`2xx` answer, too many redirects, a timeout, or a broken transfer |
 | 429 | `rate_limited` | Includes a `Retry-After` header in seconds |
 | 451 | `blocked` | This exact file is blocked |
 | 503 | `storage_unavailable` | Uploads fail closed while storage is unreachable; retry later |
