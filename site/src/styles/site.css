@@ -346,6 +346,19 @@ li + li {
   color: var(--muted);
 }
 
+/* Read by screen readers and search engines, not shown. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 code {
   font-family: var(--mono);
   color: var(--ember);
@@ -354,26 +367,61 @@ code {
 
 /* Upload */
 
+/* The one line everyone should read, in place of a hero. */
+.upload-notice {
+  margin: 56px 0 0;
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+/* The dashed box: the picker button on top, then the results. */
 .dropzone {
-  margin-top: 40px;
-  padding: 48px 16px;
+  margin-top: 32px;
   border: 1px dashed var(--ember);
   background: var(--surface);
-  text-align: center;
+}
+
+.dropzone.is-dragging,
+.dropzone:has(.dropzone-button:hover) {
+  border-style: solid;
 }
 
 .dropzone.is-dragging {
-  border-style: solid;
   background: var(--coal);
 }
 
-.dropzone p {
-  margin: 16px 0 0;
+.dropzone-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 56px 16px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: center;
+  text-wrap: balance;
+  cursor: pointer;
 }
 
-/* Each size limit stays on one line; the list wraps between them. */
-.limit {
-  white-space: nowrap;
+.dropzone-button:hover {
+  background: var(--coal);
+}
+
+/* Inside the dashed border, so the ring is not lost against it. */
+.dropzone-button:focus-visible {
+  outline-offset: -6px;
+}
+
+.dropzone-button:hover .button,
+.dropzone-button:focus-visible .button {
+  background: var(--text);
+  border-color: var(--text);
 }
 
 .button {
@@ -384,6 +432,7 @@ code {
   background: var(--ember);
   color: var(--coal);
   font: inherit;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -423,17 +472,51 @@ code {
 .turnstile-slot:not(:empty) {
   display: flex;
   justify-content: center;
-  margin-top: 16px;
+  padding: 0 16px 16px;
 }
 
 .results {
-  margin: 40px 0;
-  padding: 0;
+  margin: 0;
+  padding: 0 16px 16px;
   list-style: none;
 }
 
 .results:empty {
   display: none;
+}
+
+.url-upload {
+  margin-top: 16px;
+}
+
+.text-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ember);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.text-button:hover,
+.text-button:focus-visible {
+  color: var(--text);
+}
+
+.url-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.url-form[hidden] {
+  display: none;
+}
+
+.url-form input {
+  flex: 1;
+  min-width: 0;
 }
 
 .upload-terms {
@@ -443,7 +526,7 @@ code {
 .result {
   padding: 12px;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--bg);
 }
 
 .result + .result {
@@ -579,6 +662,20 @@ textarea {
 @media (max-width: 480px) {
   h1 {
     font-size: 26px;
+  }
+
+  .upload-notice {
+    margin-top: 40px;
+    font-size: 18px;
+  }
+
+  .dropzone-button {
+    padding: 40px 16px;
+  }
+
+  .results,
+  .turnstile-slot:not(:empty) {
+    padding: 0 12px 12px;
   }
 
   .result-link {
