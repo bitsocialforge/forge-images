@@ -4,7 +4,7 @@ The public contract for uploading to and reporting files on Forge Images. Use it
 [`@bitsocialforge/forge-images-client`](../packages/client/README.md).
 
 - **API origin:** `https://img-api.bitsocialforge.com`
-- **Media origin:** `https://img.bitsocialforge.com`
+- **Media origin:** `https://forgeimg.net`
 
 Everything except the upload body is JSON. There are no cookies or sessions.
 
@@ -52,7 +52,7 @@ Integration limits are higher. Response `200`:
 
 ```json
 {
-  "url": "https://img.bitsocialforge.com/9f86d081…0015ad/photo.jpg",
+  "url": "https://forgeimg.net/9f86d081…0015ad/photo.jpg",
   "sha256": "9f86d081…0015ad",
   "size": 482113,
   "mime": "image/jpeg",
@@ -72,8 +72,8 @@ Integration limits are higher. Response `200`:
 
 | Form | Example |
 |---|---|
-| Canonical | `https://img.bitsocialforge.com/<sha256>.<ext>` |
-| Named | `https://img.bitsocialforge.com/<sha256>/<name>.<ext>` |
+| Canonical | `https://forgeimg.net/<sha256>.<ext>` |
+| Named | `https://forgeimg.net/<sha256>/<name>.<ext>` |
 
 Both forms serve the same file. Only the hash and the extension matter; the name is cosmetic. Files do not
 expire. Identical files share one hash and one stored copy.
@@ -81,7 +81,7 @@ expire. Identical files share one hash and one stored copy.
 ## POST /api/report
 
 ```json
-{ "url": "https://img.bitsocialforge.com/<sha256>/photo.jpg", "reason": "illegal", "detail": "optional text" }
+{ "url": "https://forgeimg.net/<sha256>/photo.jpg", "reason": "illegal", "detail": "optional text" }
 ```
 
 Send `url` (either form) or `sha256`. `reason` is one of `csam`, `illegal`, `dmca`, `other`. The answer is always
@@ -95,7 +95,7 @@ Both return the same 1×1 PNG, so clients can probe availability with an `<img>`
 
 - `GET https://img-api.bitsocialforge.com/health.png`: the upload API is healthy (`503` with a JSON body
   otherwise; `Cache-Control: no-store`).
-- `GET https://img.bitsocialforge.com/2aa4fa20701cdd6d8d56046069001186b5267e3ee7d0ef618ad2f4a683723e11.png`: the
+- `GET https://forgeimg.net/2aa4fa20701cdd6d8d56046069001186b5267e3ee7d0ef618ad2f4a683723e11.png`: the
   media origin serves.
 
 ## Errors

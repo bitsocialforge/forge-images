@@ -8,7 +8,7 @@ const json = (status: number, body: unknown, headers: Record<string, string> = {
 describe("uploadFile", () => {
   it("sends the Turnstile token before the file and returns the result", async () => {
     const result = {
-      url: `https://img.bitsocialforge.com/${SHA}/cat.png`,
+      url: `https://forgeimg.net/${SHA}/cat.png`,
       sha256: SHA,
       size: 3,
       mime: "image/png",
@@ -29,7 +29,7 @@ describe("uploadFile", () => {
   it("sends an empty filename field to leave the name out, and the API key as a bearer token", async () => {
     const fetchMock = vi.fn(async () =>
       json(200, {
-        url: `https://img.bitsocialforge.com/${SHA}.png`,
+        url: `https://forgeimg.net/${SHA}.png`,
         sha256: SHA,
         size: 1,
         mime: "image/png",
@@ -77,16 +77,13 @@ describe("reportFile", () => {
   it("posts JSON and accepts 202", async () => {
     const fetchMock = vi.fn(async () => new Response(null, { status: 202 }));
 
-    await reportFile(
-      { url: `https://img.bitsocialforge.com/${SHA}.png`, reason: "illegal", detail: "x" },
-      { fetch: fetchMock },
-    );
+    await reportFile({ url: `https://forgeimg.net/${SHA}.png`, reason: "illegal", detail: "x" }, { fetch: fetchMock });
 
     const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
     expect(url).toBe("https://img-api.bitsocialforge.com/api/report");
     expect(init.headers).toEqual({ "Content-Type": "application/json" });
     expect(JSON.parse(init.body as string)).toEqual({
-      url: `https://img.bitsocialforge.com/${SHA}.png`,
+      url: `https://forgeimg.net/${SHA}.png`,
       reason: "illegal",
       detail: "x",
     });
@@ -99,17 +96,15 @@ describe("reportFile", () => {
 
 describe("canonicalMediaUrl", () => {
   it("maps named and canonical URLs to the canonical form", () => {
-    expect(canonicalMediaUrl(`https://img.bitsocialforge.com/${SHA}/funny%20cat.PNG?x=1`)).toBe(
-      `https://img.bitsocialforge.com/${SHA}.png`,
+    expect(canonicalMediaUrl(`https://forgeimg.net/${SHA}/funny%20cat.PNG?x=1`)).toBe(
+      `https://forgeimg.net/${SHA}.png`,
     );
-    expect(canonicalMediaUrl(`https://img.bitsocialforge.com/${SHA}.webp`)).toBe(
-      `https://img.bitsocialforge.com/${SHA}.webp`,
-    );
+    expect(canonicalMediaUrl(`https://forgeimg.net/${SHA}.webp`)).toBe(`https://forgeimg.net/${SHA}.webp`);
   });
 
   it("rejects other hosts and malformed paths", () => {
     expect(canonicalMediaUrl(`https://example.com/${SHA}.png`)).toBeNull();
-    expect(canonicalMediaUrl("https://img.bitsocialforge.com/not-a-hash.png")).toBeNull();
-    expect(canonicalMediaUrl(`https://img.bitsocialforge.com/${SHA}/.png`)).toBeNull();
+    expect(canonicalMediaUrl("https://forgeimg.net/not-a-hash.png")).toBeNull();
+    expect(canonicalMediaUrl(`https://forgeimg.net/${SHA}/.png`)).toBeNull();
   });
 });
