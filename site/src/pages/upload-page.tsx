@@ -101,7 +101,11 @@ export function UploadPage() {
           Choose files
         </button>
         <p>or drop them here, or paste with Ctrl+V</p>
-        <p className="muted">JPEG, PNG, WebP up to 10 MB · GIF and SWF up to 20 MB · MP4 and WebM up to 50 MB</p>
+        <p className="muted">
+          <span className="limit">JPEG, PNG, WebP up to 10 MB</span> ·{" "}
+          <span className="limit">GIF and SWF up to 20 MB</span> ·{" "}
+          <span className="limit">MP4 and WebM up to 50 MB</span>
+        </p>
         <input
           ref={fileInputRef}
           id="file-input"
