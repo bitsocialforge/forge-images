@@ -55,7 +55,7 @@ export function FaqPage() {
 
       <h3>Is adult content allowed?</h3>
       <p>
-        Yes, legal adult content is allowed. Child sexual abuse material and other illegal content is not. See the{" "}
+        Yes, legal adult content is allowed; illegal content is not. See the{" "}
         <a href="/legal#acceptable-use">Acceptable Use Policy</a> for the full list.
       </p>
 
