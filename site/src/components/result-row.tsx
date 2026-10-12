@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatSize, type Tone } from "../lib/upload";
 
 export interface UploadRow {
@@ -13,19 +13,41 @@ export interface UploadRow {
   url: string | null;
 }
 
+/** How long the Copy button shows its result before it reads "Copy" again. */
+const COPIED_LABEL_MS = 2000;
+const MANUAL_COPY_LABEL_MS = 4000;
+
 export function ResultRow({ row }: { row: UploadRow }) {
   const { url } = row;
   const linkRef = useRef<HTMLInputElement>(null);
   const [copyLabel, setCopyLabel] = useState("Copy");
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (resetTimerRef.current !== null) clearTimeout(resetTimerRef.current);
+    },
+    [],
+  );
+
+  function showCopyResult(label: string, durationMs: number) {
+    setCopyLabel(label);
+    // A second click restarts the countdown instead of letting an earlier timer cut it short.
+    if (resetTimerRef.current !== null) clearTimeout(resetTimerRef.current);
+    resetTimerRef.current = setTimeout(() => {
+      resetTimerRef.current = null;
+      setCopyLabel("Copy");
+    }, durationMs);
+  }
 
   async function copyLink(link: string) {
     try {
       await navigator.clipboard.writeText(link);
-      setCopyLabel("Copied");
+      showCopyResult("Copied", COPIED_LABEL_MS);
     } catch {
       linkRef.current?.focus();
       linkRef.current?.select();
-      setCopyLabel("Press Ctrl+C");
+      showCopyResult("Press Ctrl+C", MANUAL_COPY_LABEL_MS);
     }
   }
 
