@@ -5,7 +5,7 @@ export function LegalPage() {
   return (
     <SiteLayout current="legal">
       <h1>Legal</h1>
-      <p className="lede">Effective October 11, 2026.</p>
+      <p className="lede">Effective October 12, 2026.</p>
 
       <nav className="toc" aria-label="Contents">
         <ol>
@@ -43,8 +43,9 @@ export function LegalPage() {
 
       <h3>Who can upload</h3>
       <p>
-        You must be at least 18, or the age of majority where you live if that is higher. You may not use the service if
-        you are located in a country or region under comprehensive US sanctions, or if you are on a US sanctions list.
+        You must be at least 13, or at least 16 if you live in the European Union, or older if your country's age of
+        digital consent is higher. You may not use the service if you are located in a country or region under
+        comprehensive US sanctions, or if you are on a US sanctions list.
       </p>
 
       <h3>Your files</h3>
@@ -245,7 +246,10 @@ export function LegalPage() {
       </p>
 
       <h3>Children</h3>
-      <p>The service is not for anyone under 18.</p>
+      <p>
+        The service is not for children under 13 (under 16 in the European Union). We do not knowingly collect their
+        data, and we delete it if we learn we have.
+      </p>
 
       <h2 id="copyright">Copyright and DMCA</h2>
       <p>
