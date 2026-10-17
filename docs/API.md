@@ -64,7 +64,7 @@ that contradicts the contents is rejected.
 |---|---|---|
 | JPEG, PNG, WebP | 10 MiB | EXIF, GPS, XMP, IPTC and comments are removed; the rotation tag is kept |
 | GIF | 20 MiB | Stored as uploaded |
-| MP4, WebM | 50 MiB, 10 minutes | Remuxed without re-encoding: container metadata removed, MP4 moov atom moved to the front for streaming, only the first video and audio tracks kept. WebM must use VP8/VP9/AV1 video and Vorbis/Opus audio |
+| MP4, WebM | 50 MiB, 10 minutes | Remuxed without re-encoding: container metadata removed, MP4 moov atom moved to the front for streaming, only the first video and audio tracks kept. WebM must use VP8/VP9/AV1 video and Vorbis/Opus audio. An MP4 with VP9 video is stored and returned as WebM (`video/webm`, `.webm` URL), because iPhone Safari cannot play VP9 from an MP4; its audio is encoded to Opus unless it already is Opus or Vorbis |
 | SWF (FWS, CWS) | 20 MiB | Stored as uploaded; every new SWF is reviewed by a person before it serves. LZMA (ZWS) is rejected |
 
 Integration limits are higher. Response `200`:
