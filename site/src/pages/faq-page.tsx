@@ -78,8 +78,9 @@ export function FaqPage() {
         Yes. We remove EXIF (including GPS location), XMP, IPTC, and comments from JPEG, PNG, and WebP files before
         storing them, without re-compressing the image. Only the rotation setting is kept, so photos display the right
         way up. For MP4 and WebM videos we remove the container metadata, including location and titles, without
-        re-encoding. GIF and SWF files are stored exactly as uploaded. If an image cannot be processed safely, it is
-        stored as uploaded, so remove anything sensitive yourself first.
+        re-encoding. An MP4 with VP9 video is stored as WebM so it plays on iPhones, with its audio converted to Opus.
+        GIF and SWF files are stored exactly as uploaded. If an image cannot be processed safely, it is stored as
+        uploaded, so remove anything sensitive yourself first.
       </p>
 
       <h3>Can I delete a file I uploaded?</h3>
