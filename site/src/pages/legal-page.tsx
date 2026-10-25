@@ -5,7 +5,7 @@ export function LegalPage() {
   return (
     <SiteLayout current="legal">
       <h1>Legal</h1>
-      <p className="lede">Effective October 12, 2026.</p>
+      <p className="lede">Effective October 25, 2026.</p>
 
       <nav className="toc" aria-label="Contents">
         <ol>
@@ -216,6 +216,11 @@ export function LegalPage() {
           detect abuse. <a href="https://openai.com/enterprise-privacy/">OpenAI API privacy</a>.
         </li>
         <li>
+          <strong>A child-protection organization</strong> may receive perceptual hashes of new images, and of frames
+          sampled from new videos, to check them against known child sexual abuse material before they are published. A
+          perceptual hash is a 32-byte fingerprint computed from a picture. The organization never receives the files.
+        </li>
+        <li>
           <strong>Vercel</strong> hosts this website and counts its visits.{" "}
           <a href="https://vercel.com/legal/privacy-policy">Vercel privacy policy</a>.
         </li>
@@ -320,9 +325,10 @@ export function LegalPage() {
       </p>
       <p>
         If you see it, email the link to <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a>, where a
-        person reads every message, and use the <a href="/report">report form</a>, which triggers an automatic re-check.
-        You can also report it directly to <a href="https://report.cybertip.org/">NCMEC's CyberTipline</a> or to your
-        local police. Do not download, screenshot, or share it, even to report it.
+        person reads every message, and use the <a href="/report">report form</a> with the reason &quot;Child sexual
+        abuse material&quot;, which takes the file offline until a person reviews it. You can also report it directly to{" "}
+        <a href="https://report.cybertip.org/">NCMEC's CyberTipline</a> or to your local police. Do not download,
+        screenshot, or share it, even to report it.
       </p>
 
       <h2 id="contact">Contact</h2>

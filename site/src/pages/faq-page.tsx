@@ -108,9 +108,11 @@ export function FaqPage() {
       <h3>Who checks the uploads?</h3>
       <p>
         New images, and frames sampled from new videos, are checked automatically with OpenAI's moderation service.
-        Cloudflare also scans served files for known child sexual abuse material. Flagged files and all new SWF files
-        are reviewed by a person. Reported files are re-checked automatically; email{" "}
-        <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> when a person needs to look.
+        Their fingerprints may also be checked against known child sexual abuse material before they are published, and
+        Cloudflare scans served files for known material. Flagged files and all new SWF files are reviewed by a person.
+        Reported files are re-checked automatically, and a file reported as child sexual abuse material goes offline
+        until a person reviews it. Email <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> when a
+        person needs to look.
       </p>
 
       <h3>How do I report a file?</h3>
