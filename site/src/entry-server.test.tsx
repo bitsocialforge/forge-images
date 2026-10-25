@@ -9,7 +9,7 @@ describe("renderPage", () => {
 
   it("puts the legal text, including the DMCA agent, in the markup", () => {
     const html = renderPage("legal");
-    expect(html).toContain("Effective October 12, 2026.");
+    expect(html).toContain("Effective October 25, 2026.");
     expect(html).toContain("Copyright Agent, Bitsocial Forge Inc.<br/> 1021 E Lincolnway, PMB 7723");
     expect(html).toContain('<h2 id="child-safety">Child safety</h2>');
   });
