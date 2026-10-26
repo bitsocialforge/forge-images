@@ -5,7 +5,7 @@ export function LegalPage() {
   return (
     <SiteLayout current="legal">
       <h1>Legal</h1>
-      <p className="lede">Effective October 25, 2026.</p>
+      <p className="lede">Effective October 26, 2026.</p>
 
       <nav className="toc" aria-label="Contents">
         <ol>
@@ -171,14 +171,21 @@ export function LegalPage() {
         </li>
         <li>
           <strong>Your IP address</strong>, linked to the files it uploaded. We delete it after about 90 days. If a file
-          is reported or removed, the related records are kept for up to one year from upload, then deleted.
+          is reported or removed, the related records are kept for one year from its first report, its removal, or our
+          report to NCMEC, whichever is latest, then deleted.
+        </li>
+        <li>
+          <strong>Blocked IP addresses.</strong> If we block an IP address from uploading, we keep it while the block
+          lasts and delete it about 90 days after the block ends, or later if it is kept with a reported or removed
+          file's records. A permanent block keeps it.
         </li>
         <li>
           <strong>Rate-limit counters</strong> keyed to your IP address, deleted after two days.
         </li>
         <li>
-          <strong>Reports</strong> you send through the report form: the link, reason, details, and your IP address,
-          kept as records of how we handled the report.
+          <strong>Reports</strong> you send through the report form: the link, reason, details, and your IP address. We
+          keep the report as a record of how we handled it. We delete your IP address after about 90 days, or later with
+          the file's records if we remove the file.
         </li>
         <li>
           <strong>Emails</strong> you send us, kept as long as needed to deal with them and as legal records.
