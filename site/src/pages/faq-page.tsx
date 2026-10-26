@@ -101,8 +101,9 @@ export function FaqPage() {
       <h3>Do you log my IP address?</h3>
       <p>
         Yes. We store the IP address that uploaded each file for about 90 days to fight abuse, then delete it. If a file
-        is reported or removed, the related records are kept for up to one year from upload. We do not track who views
-        files. Details are in the <a href="/legal#privacy">Privacy Policy</a>.
+        is reported or removed, the related records are kept for about a year after that. If we block an IP address, we
+        keep it while the block lasts. We do not track who views files. Details are in the{" "}
+        <a href="/legal#privacy">Privacy Policy</a>.
       </p>
 
       <h3>Who checks the uploads?</h3>
