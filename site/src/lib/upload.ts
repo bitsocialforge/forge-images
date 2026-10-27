@@ -129,7 +129,9 @@ function reportUploaded(row: UploadRowHandle, body: UploadResult) {
   if (body.status === "live") {
     row.setStatus("Live. The link works now.", "ok");
   } else if (body.mime === "application/x-shockwave-flash") {
-    row.setStatus("Uploaded. New SWF files are reviewed by a person; the link returns 404 until approved.");
+    row.setStatus("Uploaded. Checking frames and images from the SWF; the link works in a minute or less…");
+    // Same probe as video: a HEAD request, with the longer wait for frame checks.
+    void reportWhenServed(row, body.url, true);
   } else if (body.mime.startsWith("video/")) {
     row.setStatus("Uploaded. Checking frames from the video; the link works in a minute or less…");
     void reportWhenServed(row, body.url, true);

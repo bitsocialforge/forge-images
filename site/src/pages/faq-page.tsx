@@ -61,9 +61,9 @@ export function FaqPage() {
 
       <h3>Why does my link show an error right after uploading?</h3>
       <p>
-        New images and videos stay private until automated checks finish, which usually takes a few seconds for an image
-        and up to a minute for a video. If a check flags a file, a person reviews it before it goes live. New SWF files
-        are always reviewed by a person, so their links return 404 until approved.
+        New files stay private until automated checks finish, which usually takes a few seconds for an image and up to a
+        minute for a video or SWF. If a check flags a file, or a SWF cannot be checked, a person reviews it before it
+        goes live.
       </p>
 
       <h3>Why is my filename in the link?</h3>
@@ -108,12 +108,12 @@ export function FaqPage() {
 
       <h3>Who checks the uploads?</h3>
       <p>
-        New images, and frames sampled from new videos, are checked automatically with OpenAI's moderation service.
-        Their fingerprints may also be checked against known child sexual abuse material before they are published, and
-        Cloudflare scans served files for known material. Flagged files and all new SWF files are reviewed by a person.
-        Reported files are re-checked automatically, and a file reported as child sexual abuse material goes offline
-        until a person reviews it. Email <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> when a
-        person needs to look.
+        New images, frames sampled from new videos, and frames and embedded images from new SWF files are checked
+        automatically with OpenAI's moderation service. Their fingerprints may also be checked against known child
+        sexual abuse material before they are published, and Cloudflare scans served files for known material. Flagged
+        files, and SWF files that cannot be checked, are reviewed by a person. Reported files are re-checked
+        automatically, and a file reported as child sexual abuse material goes offline until a person reviews it. Email{" "}
+        <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> when a person needs to look.
       </p>
 
       <h3>How do I report a file?</h3>

@@ -198,6 +198,31 @@ describe("sendUrl", () => {
     await vi.waitFor(() => expect(calls.at(-1)).toEqual(["status", "Live. The link works now.", "ok"]));
   });
 
+  it("polls a pending SWF with the longer frame-check wait", async () => {
+    const result = {
+      url: `https://forgeimg.net/${SHA}/game.swf`,
+      sha256: SHA,
+      size: 1,
+      mime: "application/x-shockwave-flash",
+      status: "pending",
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => json(200, result)),
+    );
+    const { row, calls } = recordRow();
+
+    await sendUrl("https://example.com/game.swf", row, { hideName: false, slot, config });
+
+    expect(calls).toContainEqual([
+      "status",
+      "Uploaded. Checking frames and images from the SWF; the link works in a minute or less…",
+      undefined,
+    ]);
+    expect(waitUntilServed).toHaveBeenCalledWith(result.url, true);
+    await vi.waitFor(() => expect(calls.at(-1)).toEqual(["status", "Live. The link works now.", "ok"]));
+  });
+
   it.each([
     [422, "url_fetch_failed", "The link answered with HTTP 404.", "Upload failed: The link answered with HTTP 404."],
     [400, "url_not_allowed", "That address is not allowed.", "Upload failed: That address is not allowed."],

@@ -218,14 +218,16 @@ export function LegalPage() {
           <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a>.
         </li>
         <li>
-          <strong>OpenAI</strong> receives new images, and still frames sampled from new videos, for automated
-          moderation through its API. OpenAI does not train on API data by default and may keep it for up to 30 days to
-          detect abuse. <a href="https://openai.com/enterprise-privacy/">OpenAI API privacy</a>.
+          <strong>OpenAI</strong> receives new images, still frames sampled from new videos, and frames and embedded
+          images from new SWF files, for automated moderation through its API. OpenAI does not train on API data by
+          default and may keep it for up to 30 days to detect abuse.{" "}
+          <a href="https://openai.com/enterprise-privacy/">OpenAI API privacy</a>.
         </li>
         <li>
-          <strong>A child-protection organization</strong> may receive perceptual hashes of new images, and of frames
-          sampled from new videos, to check them against known child sexual abuse material before they are published. A
-          perceptual hash is a 32-byte fingerprint computed from a picture. The organization never receives the files.
+          <strong>A child-protection organization</strong> may receive perceptual hashes of new images, of frames
+          sampled from new videos, and of frames and embedded images from new SWF files, to check them against known
+          child sexual abuse material before they are published. A perceptual hash is a 32-byte fingerprint computed
+          from a picture. The organization never receives the files.
         </li>
         <li>
           <strong>Vercel</strong> hosts this website and counts its visits.{" "}

@@ -65,7 +65,7 @@ that contradicts the contents is rejected.
 | JPEG, PNG, WebP | 10 MiB | EXIF, GPS, XMP, IPTC and comments are removed; the rotation tag is kept |
 | GIF | 20 MiB | Stored as uploaded |
 | MP4, WebM | 50 MiB, 10 minutes | Remuxed without re-encoding: container metadata removed, MP4 moov atom moved to the front for streaming, only the first video and audio tracks kept. WebM must use VP8/VP9/AV1 video and Vorbis/Opus audio. An MP4 with VP9 video is stored and returned as WebM (`video/webm`, `.webm` URL), because iPhone Safari cannot play VP9 from an MP4; its audio is encoded to Opus unless it already is Opus or Vorbis |
-| SWF (FWS, CWS) | 20 MiB | Stored as uploaded; every new SWF is reviewed by a person before it serves. LZMA (ZWS) is rejected |
+| SWF (FWS, CWS) | 20 MiB | Stored as uploaded. A new SWF is rendered offline and its frames and embedded images are checked; one that is flagged or cannot be checked is held for a person. LZMA (ZWS) is rejected |
 
 Integration limits are higher. Response `200`:
 
@@ -83,9 +83,8 @@ Integration limits are higher. Response `200`:
   is removed. Use the returned value.
 - `status: "live"`: the URL serves now (for example, the same file was already approved).
 - `status: "pending"`: the URL returns 404 until moderation approves it. That takes seconds for images and up
-  to about a minute for videos (sampled frames are checked); a file
-  held for a person (and every new SWF) can take hours. Poll the URL with backoff; 404 responses during this
-  window are not cached.
+  to about a minute for videos and SWFs (sampled frames are checked); a file held for a person can take hours.
+  Poll the URL with backoff; 404 responses during this window are not cached.
 
 ## Media URLs
 
