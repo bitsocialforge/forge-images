@@ -436,9 +436,19 @@ code {
   border-color: var(--text);
 }
 
-.button:disabled {
+.button:disabled,
+.dropzone-button:disabled,
+.text-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Inside <noscript>: the upload box and the report form need JavaScript. */
+.noscript-note {
+  margin: 24px 0 0;
+  padding: 12px 16px;
+  border: 1px solid var(--ember);
+  background: var(--surface);
 }
 
 .button-secondary {

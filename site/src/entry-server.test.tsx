@@ -27,6 +27,22 @@ describe("renderPage", () => {
     expect(dropzone.match(/<button/g)).toHaveLength(1);
   });
 
+  it("prerenders the report and upload controls disabled, with a no-JavaScript notice, until hydration", () => {
+    // The prerendered markup has no event handlers until the page hydrates, and the CSP blocks a native form
+    // submit, so an enabled button would silently drop the click.
+    const noscript = (html: string) => html.match(/<noscript>(.*?)<\/noscript>/)?.[1] ?? "";
+
+    const report = renderPage("report");
+    expect(report).toMatch(/<button id="report-submit"[^>]* disabled=""/);
+    expect(noscript(report)).toMatch(/^<p class="noscript-note">Sending this form needs JavaScript\./);
+    expect(noscript(report)).toContain('<a href="mailto:abuse@bitsocialforge.com">');
+
+    const upload = renderPage("index");
+    expect(upload).toMatch(/<button id="choose-button"[^>]* disabled=""/);
+    expect(upload).toMatch(/<button type="button" class="text-button"[^>]* disabled=""[^>]*>Upload via URL</);
+    expect(noscript(upload)).toMatch(/^<p class="noscript-note">Uploading needs JavaScript\./);
+  });
+
   it("marks the current page in the navigation", () => {
     expect(renderPage("faq")).toContain('<a href="/faq" aria-current="page">FAQ</a>');
     expect(renderPage("index")).toContain('<a href="/" aria-current="page">Upload</a>');

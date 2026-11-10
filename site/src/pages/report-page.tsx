@@ -4,8 +4,10 @@ import { SiteLayout } from "../components/site-layout";
 import { resolveSiteConfig } from "../lib/config";
 import { describeReportFailure } from "../lib/report";
 import type { Tone } from "../lib/upload";
+import { useHydrated } from "../lib/use-hydrated";
 
 export function ReportPage() {
+  const hydrated = useHydrated();
   const urlRef = useRef<HTMLInputElement>(null);
   const reasonRef = useRef<HTMLSelectElement>(null);
   const detailRef = useRef<HTMLTextAreaElement>(null);
@@ -77,6 +79,13 @@ export function ReportPage() {
         </li>
       </ul>
 
+      <noscript>
+        <p className="noscript-note">
+          Sending this form needs JavaScript. Without it, email the link to{" "}
+          <a href="mailto:abuse@bitsocialforge.com">abuse@bitsocialforge.com</a> instead.
+        </p>
+      </noscript>
+
       <form id="report-form" className="report-form" noValidate onSubmit={(event) => void onSubmit(event)}>
         <div className="field">
           <label htmlFor="report-url">Link to the file</label>
@@ -99,7 +108,7 @@ export function ReportPage() {
           We record your report and your IP address to handle it and to prevent abuse of this form. See the{" "}
           <a href="/legal#privacy">Privacy Policy</a>.
         </p>
-        <button id="report-submit" className="button" type="submit" disabled={sending}>
+        <button id="report-submit" className="button" type="submit" disabled={!hydrated || sending}>
           Send report
         </button>
         <p id="report-status" className="form-status" role="status" data-tone={status.tone}>

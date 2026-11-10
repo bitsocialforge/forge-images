@@ -4,12 +4,14 @@ import { ResultRow, type UploadRow } from "../components/result-row";
 import { SiteLayout } from "../components/site-layout";
 import { resolveSiteConfig } from "../lib/config";
 import { checkFile, checkUrl, sendOne, sendUrl, type SendOptions, type UploadRowHandle } from "../lib/upload";
+import { useHydrated } from "../lib/use-hydrated";
 
 const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,.swf,application/x-shockwave-flash";
 
 type Send = (row: UploadRowHandle, options: SendOptions) => Promise<void>;
 
 export function UploadPage() {
+  const hydrated = useHydrated();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const urlInputRef = useRef<HTMLInputElement>(null);
   const hideFilenameRef = useRef<HTMLInputElement>(null);
@@ -128,6 +130,10 @@ export function UploadPage() {
         <a href="/faq">FAQ</a> for details.
       </p>
 
+      <noscript>
+        <p className="noscript-note">Uploading needs JavaScript. Turn it on for this site to upload files.</p>
+      </noscript>
+
       <section
         id="dropzone"
         className={isDragging ? "dropzone is-dragging" : "dropzone"}
@@ -144,6 +150,7 @@ export function UploadPage() {
           type="button"
           aria-labelledby="choose-label"
           aria-describedby="choose-hint"
+          disabled={!hydrated}
           onClick={() => fileInputRef.current?.click()}
         >
           <span id="choose-label" className="button">
@@ -181,6 +188,7 @@ export function UploadPage() {
           className="text-button"
           aria-expanded={isUrlFormOpen}
           aria-controls="url-form"
+          disabled={!hydrated}
           onClick={toggleUrlForm}
         >
           Upload via URL
