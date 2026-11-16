@@ -34,8 +34,9 @@ hourly limit per client IP, in both modes.
 Anonymous uploads are checked against the spam blocker before the API reads the file. Confirmed
 non-Tor connections can continue with Turnstile as usual. A Tor connection needs a short-lived,
 single-use upload authorization obtained through a supporting 5chan client after it verifies a
-whitelist or eligible `.bso` name exemption for an approved community. The standalone upload page
-cannot obtain that exemption: use a connection without Tor there, or upload through the supporting
+whitelist or eligible `.bso` name exemption for an approved community. The rejection message explicitly says that the connection was detected as Tor and points eligible
+users to the 5chan posting check with an owner-whitelisted account or verified `.bso` name.
+The standalone upload page cannot obtain that exemption: use a connection without Tor there, or upload through the supporting
 5chan posting flow. An unavailable IP classification or authorization service returns `503`; it does
 not allow the upload. Integration keys retain their existing access mode.
 
