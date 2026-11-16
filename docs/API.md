@@ -14,7 +14,7 @@ Every API route and the media origin answer browsers from any origin:
 
 - `Access-Control-Allow-Origin: *`
 - `Access-Control-Allow-Methods: GET, HEAD, POST, OPTIONS`
-- `Access-Control-Allow-Headers: Authorization, Content-Type`
+- `Access-Control-Allow-Headers: Authorization, Content-Type, X-Bitsocial-Upload-Authorization`
 - `Access-Control-Max-Age: 86400`
 
 Never send credentials mode; nothing is cookie-authenticated.
@@ -28,6 +28,23 @@ Never send credentials mode; nothing is cookie-authenticated.
 
 Uploads are rate-limited per IP (anonymous) or per key (integration). Uploads by URL also count against a lower
 hourly limit per client IP, in both modes.
+
+## Anonymous uploads through Tor
+
+Anonymous uploads are checked against the spam blocker before the API reads the file. Confirmed
+non-Tor connections can continue with Turnstile as usual. A Tor connection needs a short-lived,
+single-use upload authorization obtained through a supporting 5chan client after it verifies a
+whitelist or eligible `.bso` name exemption for an approved community. The standalone upload page
+cannot obtain that exemption: use a connection without Tor there, or upload through the supporting
+5chan posting flow. An unavailable IP classification or authorization service returns `503`; it does
+not allow the upload. Integration keys retain their existing access mode.
+
+Supporting clients send `X-Bitsocial-Upload-Authorization` before the multipart body. Its value is
+unpadded base64url of UTF-8 JSON containing `token`, `sha256` (lowercase hex), `byteLength` (positive
+integer), and `mimeType` (string). The authorization must describe the exact file bytes sent, after
+any client-side processing. A permit is consumed once; changing its file, replaying it, or using it
+for an upload by URL is rejected. The API still requires Turnstile and applies its usual upload limits
+and moderation. Do not put integration keys in a browser or use client-provided exemption claims.
 
 ## POST /api/upload
 
@@ -128,6 +145,9 @@ short text suitable to show the uploader, not a stable contract.
 | 400 | `url_not_allowed` | The link, or a redirect, points to a private or internal address, or redirects to a link that would be `invalid_url` |
 | 401 | `bad_key` | The `Authorization` key is invalid or revoked |
 | 403 | `turnstile_failed` | Missing or invalid Turnstile token |
+| 403 | `tor_blocked` | Tor upload needs a verified community exemption through a supporting 5chan client |
+| 403 | `invalid_upload_authorization` | Invalid, expired, used, or mismatched upload permit |
+| 503 | `upload_authorization_unavailable` | Authorization or IP classification is unavailable; retry later |
 | 403 | `banned` | The IP or key is banned |
 | 413 | `too_large` | Over the limit for the type and access mode |
 | 415 | `unsupported_type` | Type not accepted, or the declared type contradicts the contents |
