@@ -15,6 +15,8 @@ must not be copied here.
   `dist/` from `master`; `vercel.json` sets its CSP and headers. The output must have no inline scripts, styles,
   or `data:` URLs, because the CSP allows none. Agentation is dev-only (`site/src/lib/dev-tools.ts`) and must never
   reach the production bundle.
+- For native controls, focus behavior, browser APIs, or browser-sensitive layout in `site/`, consult
+  [Modern Web Guidance](.agents/skills/modern-web-guidance/SKILL.md) for the relevant feature.
 - Match the bitsocialforge.com look: square edges, 1px borders, the ember palette, no external fonts or
   third-party trackers. All styles live in `site/src/styles/site.css`. Vercel Web Analytics (first-party,
   cookieless, `@vercel/analytics`) is the only analytics, and the legal page (`site/src/pages/legal-page.tsx`)
