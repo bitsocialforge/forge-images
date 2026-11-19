@@ -34,6 +34,7 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.3",
     "agentation": "3.0.2",
+    "modern-web-guidance": "1.0.0",
     "oxfmt": "0.72.0",
     "oxlint": "1.72.0",
     "portless": "0.11.1",
